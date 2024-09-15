@@ -1,0 +1,1 @@
+export { UserSinglePage } from "./page"

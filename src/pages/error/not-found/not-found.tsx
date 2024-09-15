@@ -30,6 +30,7 @@ const Box = styled.div`
   justify-content: center;
   gap: 30px;
   height: 100%;
+  padding: 20px 20px 50px 20px;
 `
 const Title = styled.div`
   font-size: 24px;

@@ -1,5 +1,6 @@
 import { NotFoundPage } from "@pages/error/not-found";
 import { LogInPage } from "@pages/log-in";
+import { NewsPage } from "@pages/news/archive";
 import { SignUpPage } from "@pages/sign-up";
 import { WelcomePage } from "@pages/welcome";
 import { createBrowserRouter } from "react-router-dom";
@@ -20,5 +21,9 @@ export const router = createBrowserRouter([
   {
     path: '/sign-up',
     element: <SignUpPage />
+  },
+  {
+    path: '/news',
+    element: <NewsPage />
   }
 ])

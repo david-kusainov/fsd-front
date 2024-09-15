@@ -11,10 +11,10 @@ export const WelcomePage = () => {
     <Box>
       <Content>
         <img src={logo} width={80}/>
-        <Title>
+        <div>
           Салам <br />
-          <span style={{color: '#C571F8'}}>Чат</span>
-        </Title>
+          <span>Чат</span>
+        </div>
         The last chat app you'll ever need.
       </Content>
       
@@ -30,12 +30,22 @@ const Box = styled.div`
   display: flex;
   flex-direction: column;
   height: 100%; 
+  padding: 20px 20px 50px 20px;
 `
 const Content = styled.div`
   flex: 1;
   display: flex;
   flex-direction: column;
   justify-content: center;
+  margin-bottom: 5%;
+
+  div {
+    font-size: 64px;
+
+    span {
+      color: #C571F8;
+    }
+  }
 `
 const ButtonContainer = styled.div`
   display: flex;
@@ -43,7 +53,4 @@ const ButtonContainer = styled.div`
   align-items: center;
   gap: 20px;
   margin-bottom: 5%;
-`
-const Title = styled.div`
-  font-size: 64px;
 `

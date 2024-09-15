@@ -19,9 +19,9 @@ export const LogInPage = () => {
       <Box>
         <Content>
           <img src={logo} width={80}/>
-          <Title>
+          <span>
             Вход
-          </Title>
+          </span>
         </Content>
         <FormLayout onSubmit={onSubmit}>
           <InputField
@@ -46,13 +46,15 @@ const Box = styled.div`
   display: flex;
   flex-direction: column;
   height: 100%; 
+  padding: 20px 20px 50px 20px;
 `
 const Content = styled.div`
   flex: 1;
   display: flex;
   flex-direction: column;
   justify-content: center;
-`
-const Title = styled.div`
-  font-size: 64px;
+  margin-bottom: 12%;
+  span {
+    font-size: 64px;
+  }
 `
