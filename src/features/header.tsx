@@ -3,50 +3,55 @@ import logo from "@public/Logo.svg";
 import { Link } from "react-router-dom";
 import { Dropdown, Menu, Space } from "antd";
 import { DownOutlined } from "@ant-design/icons";
+import { useSelector } from "react-redux";
+import { RootState } from "app/store";
 
 interface HeadProps {
   title: string
 }
 
-const menuItems = [
-  {
-    key: '1',
-    label: 'Домашняя страница',
-    link: '/'
-  },
-  {
-    key: '2',
-    label: 'Профиль',
-    link: '/private-office/profile'
-  },
-  {
-    key: '3',
-    label: 'Мои участки',
-    link: '/private-office/area'
-  },
-  {
-    key: '4',
-    label: 'Мои запросы',
-    link: '/private-office/query'
-  },
-  {
-    key: '5',
-    label: 'Список пользователей',
-    link: '/private-office/users'
-  }
-]
-
-const menu = (
-  <Menu>
-    {menuItems.map(item => (
-      <Menu.Item key={item.key}>
-        <Link to={item.link}>{item.label}</Link>
-      </Menu.Item>
-    ))}
-  </Menu>
-)
 
 export const Head = ({ title }: HeadProps) => {
+  const userId = useSelector((state: RootState) => state.user.user?.id)
+
+  const menuItems = [
+    {
+      key: '1',
+      label: 'Профиль',
+      link: `/profile/${userId}`
+    },
+    {
+      key: '2',
+      label: 'Новости',
+      link: '/news'
+    },
+    {
+      key: '3',
+      label: 'Мои участки',
+      link: '/private-office/area'
+    },
+    {
+      key: '4',
+      label: 'Мои запросы',
+      link: '/private-office/query'
+    },
+    {
+      key: '5',
+      label: 'Список пользователей',
+      link: '/private-office/users'
+    }
+  ]
+  
+  const menu = (
+    <Menu>
+      {menuItems.map(item => (
+        <Menu.Item key={item.key}>
+          <Link to={item.link}>{item.label}</Link>
+        </Menu.Item>
+      ))}
+    </Menu>
+  )
+
   return (
     <Box>
       <Title>

@@ -18,20 +18,7 @@ export const logInSlice = createSlice({
     user: null,
     error: null as string | null,
   },
-  reducers: {
-    signUpStart: (state) => {
-      state.isLoading = true
-      state.error = null
-    },
-    signUpSuccess: (state, action) => {
-      state.isLoading = false
-      state.user = action.payload
-    },
-    signUpFailure: (state, action) => {
-      state.isLoading = false
-      state.error = action.payload
-    },
-  },
+  reducers: {},
   extraReducers: (builder) => {
     builder
     .addCase(logIn.pending, (state) => {

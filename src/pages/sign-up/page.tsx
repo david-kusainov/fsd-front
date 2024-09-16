@@ -6,17 +6,23 @@ import { signUp } from "./model"
 import { SignUpDto } from "@entities/api-gen"
 import { AppDispatch } from "app/store"
 import Cookies from "js-cookie"
+import { jwtDecode } from "jwt-decode"
+import { userSlice } from "@widgets/provider"
+import { useNavigate } from "react-router-dom"
 
 export const SignUpPage = () => {
   const dispatch: AppDispatch = useDispatch()
-  
+  const navigate = useNavigate()
   const onSubmit = async (data: SignUpDto) => {
     const userData = {
       ...data,
       role: "ROLE_USER"
     }
     const token = await dispatch(signUp(userData))
+    const decoded = jwtDecode(token.payload)
     Cookies.set('token', token.payload)
+    dispatch(userSlice.actions.setUser(decoded))
+    navigate('/')
   }
 
   return (

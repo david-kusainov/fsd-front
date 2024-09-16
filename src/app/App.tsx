@@ -6,6 +6,7 @@ import { router } from "./router"
 import { customTheme, waveConfig } from "./antd-theme"
 import { Provider as ReduxProvider} from 'react-redux'
 import { store } from "./store"
+import { AccessProvider } from "@widgets/provider"
 
 export const App = () => {
   return (
@@ -18,9 +19,11 @@ export const App = () => {
     >
       <ReduxProvider store={store}>
         <Layout style={{ height: '100vh', backgroundColor: '#EDEEF0'}}>
-          <Content>
-            <RouterProvider router={router} />
-          </Content>
+          <AccessProvider>
+            <Content>
+              <RouterProvider router={router} />
+            </Content>
+          </AccessProvider>
         </Layout>
       </ReduxProvider>
     </AntdConfigProvider>
