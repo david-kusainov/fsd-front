@@ -1,22 +1,22 @@
-import { UpdateUserDto, UserDto } from "@entities/api-gen";
+import { UpdateUserDto, UserInfoDto } from "@entities/api-gen";
 import { getUserInfoById, updateUserById } from "@entities/user";
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 
 export const getUser = createAsyncThunk(
-  'api/getUserById',
+  'user/getUserById',
   async (userId: any, { rejectWithValue }) => {
-    return await getUserInfoById(userId).
-      then((response) => response).
-      catch((error) => rejectWithValue(error.response ? error.response.data : error.message));
+    return await getUserInfoById(userId)
+      .then((response) => response)
+      .catch((error) => rejectWithValue(error.response ? error.response.data : error.message));
   }
 )
 
 export const updateUser = createAsyncThunk(
-  'auth/UpdateUserById',
+  'user/UpdateUserById',
   async (args: {userId: any, data: UpdateUserDto}, { rejectWithValue }) => {
-    return await updateUserById(args).
-      then((response) => response).
-      catch((error) => rejectWithValue(error.response ? error.response.data : error.message));
+    return await updateUserById(args)
+      .then((response) => response)
+      .catch((error) => rejectWithValue(error.response ? error.response.data : error.message));
   }
 )
 
@@ -24,7 +24,7 @@ export const getUserSlice = createSlice({
   name: 'getUser',
   initialState: {
     isLoading: false,
-    user: null as UserDto | null,
+    user: null as UserInfoDto | null,
     error: null as string | null,
   },
   reducers: {},
@@ -58,7 +58,7 @@ export const updateUserSlice = createSlice({
       state.isLoading = true;
       state.error = null;
     })
-    .addCase(updateUser.fulfilled, (state, action) => {
+    .addCase(updateUser.fulfilled, (state) => {
       state.isLoading = false;
     })
     .addCase(updateUser.rejected, (state, action) => {

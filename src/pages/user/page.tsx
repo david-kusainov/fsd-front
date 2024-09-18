@@ -7,6 +7,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { getUser, updateUser } from "./model";
 import { notification, Spin } from "antd";
 import { UpdateUserDto } from "@entities/api-gen";
+import { FileUpload } from "@features/upload";
 
 export const UserSinglePage = () => {
   const dispatch: AppDispatch = useDispatch()
@@ -22,12 +23,23 @@ export const UserSinglePage = () => {
     }
   }, [userId, dispatch])
 
+  const onSubmit = (data: UpdateUserDto) => {
+    try {
+      dispatch(updateUser({ userId, data }))
+      notification.success({ message: 'Данные пользователя обновлены' })
+    } catch (e) {
+      notification.error({
+        message: `Произошла ошибка при обновлении данных пользователя: ${updateUserError}`,
+      })
+    }
+  }
+
   if (userIsLoading) {
     return (
       <div className="centered">
         <Spin tip="Загрузка данных пользователя..." />
       </div>
-    );
+    )
   }
 
   if (userError) {
@@ -38,21 +50,11 @@ export const UserSinglePage = () => {
     return <div>Пользователь не найден</div>
   }
 
-  const onSubmit = (data: UpdateUserDto) => {
-    try {
-      dispatch(updateUser({userId, data}))
-      notification.success({ message: 'Данные пользователя обновлены' })
-    } catch(e) {
-      notification.error({
-        message: `Произошла ошибка при обновлении данных пользователя: ${updateUserError}`,
-      })
-    }
-  }
-
   return (
     <MainLayout title={user?.username}>
       <Wrapper>
         <FormLayout onSubmit={onSubmit}>
+          <FileUpload userId={user.id} />
           <InputField 
             field="name"
             placeholder="Имя"

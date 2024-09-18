@@ -1,3 +1,4 @@
+import { userImageSlice } from '@features/upload';
 import { logInSlice } from '@pages/log-in';
 import { signUpSlice } from '@pages/sign-up'
 import { getUserSlice, updateUserSlice } from '@pages/user';
@@ -11,6 +12,7 @@ export const store = configureStore({
     logIn: logInSlice.reducer,
     getUser: getUserSlice.reducer,
     updateUser: updateUserSlice.reducer,
+    userImage: userImageSlice.reducer
   }
 })
 

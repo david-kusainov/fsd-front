@@ -8,3 +8,12 @@ export const $api = axios.create({
     Authorization: 'Bearer ' + Cookies.get('token'),
   },
 })
+
+export const $apiImages = axios.create({
+  baseURL: 'http://localhost:8080/api/',
+  withCredentials: true,
+  headers: {
+    Authorization: 'Bearer ' + Cookies.get('token'),
+    "Content-Type": "multipart/form-data",
+  },
+})

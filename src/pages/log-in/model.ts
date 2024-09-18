@@ -5,9 +5,9 @@ import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 export const logIn = createAsyncThunk(
   'auth/logIn',
   async (data: LogInDto, { rejectWithValue }) => {
-    return await createLogIn(data).
-      then((response) => response).
-      catch((error) => rejectWithValue(error.response ? error.response.data : error.message))
+    return await createLogIn(data)
+      .then((response) => response)
+      .catch((error) => rejectWithValue(error.response ? error.response.data : error.message))
   }
 )
 

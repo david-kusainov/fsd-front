@@ -10,7 +10,7 @@ export interface SignUpDto {
   email: string
 }
 
-export interface UserDto {
+export interface UserInfoDto {
   id: string
   username: string
   password: string
