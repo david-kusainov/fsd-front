@@ -22,3 +22,10 @@ body {
   width: 40%;
   color: #505050;
 }
+
+.centered {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh; /* Высота контейнера, равная высоте экрана */
+}

@@ -1,6 +1,6 @@
 import styled from "styled-components"
 import logo from "@public/Logo.svg"
-import { AntdSubmitButton, FormLayout, InputField } from "@shared/components"
+import { FormLayout, InputField } from "@shared/components"
 import { useDispatch } from "react-redux"
 import { signUp } from "./model"
 import { SignUpDto } from "@entities/api-gen"
@@ -14,11 +14,7 @@ export const SignUpPage = () => {
   const dispatch: AppDispatch = useDispatch()
   const navigate = useNavigate()
   const onSubmit = async (data: SignUpDto) => {
-    const userData = {
-      ...data,
-      role: "ROLE_USER"
-    }
-    const token = await dispatch(signUp(userData))
+    const token = await dispatch(signUp(data))
     const decoded = jwtDecode(token.payload)
     Cookies.set('token', token.payload)
     dispatch(userSlice.actions.setUser(decoded))
@@ -52,7 +48,6 @@ export const SignUpPage = () => {
             isRequired
             type="email"
           />
-          <AntdSubmitButton>Отправить</AntdSubmitButton>
         </FormLayout>
       </Box>
   )

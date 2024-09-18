@@ -31,7 +31,7 @@ export const InputField = ({ field, ...props }: InputFieldProps) => {
 
   if(props.password) {
     return (
-      <div style={{margin: '10px 0 30px 0'}}>
+      <div style={{margin: '20px 0 20px 0'}}>
       <Controller
         name={field}
         control={control}
@@ -52,7 +52,7 @@ export const InputField = ({ field, ...props }: InputFieldProps) => {
   }
 
   return (
-    <div style={{margin: '10px 0 30px 0'}}>
+    <div style={{margin: '20px 0 20px 0'}}>
       <Controller
         name={field}
         control={control}
@@ -83,6 +83,7 @@ export const FormLayout = ({children, onSubmit}: FormLayoutProps ) => {
     <FormProvider {...methods}>
       <form onSubmit={methods.handleSubmit(onSubmit)}>
         {children}
+        <AntdSubmitButton>Отправить</AntdSubmitButton>
       </form>
     </FormProvider>
   )

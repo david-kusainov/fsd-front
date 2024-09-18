@@ -1,6 +1,6 @@
 import styled from "styled-components"
 import logo from "@public/Logo.svg"
-import { AntdSubmitButton, FormLayout, InputField } from "@shared/components"
+import { FormLayout, InputField } from "@shared/components"
 import { AppDispatch } from "app/store"
 import { useDispatch } from "react-redux"
 import { LogInDto } from "@entities/api-gen"
@@ -42,7 +42,6 @@ export const LogInPage = () => {
             password
             lengthMin={8}
           />
-          <AntdSubmitButton>Отправить</AntdSubmitButton>
         </FormLayout>
       </Box>
   )

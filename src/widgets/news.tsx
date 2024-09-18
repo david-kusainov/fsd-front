@@ -16,11 +16,5 @@ export const News = ({ item }: NewsProps) => {
 }
 
 const Box = styled.div`
-  display: flex;
-  flex-direction: column;
-  border-radius: 20px;
-  padding: 20px;
-  background-color: white;
-  margin-bottom: 20px;
-  border: 2px solid #DEE2E7;
+
 `

@@ -1,12 +1,17 @@
-import { MainLayout } from "@widgets/main-layout";
+import { MainLayout } from "@widgets/layouts/main-layout";
 import { data } from "../../../app/test";
 import { News } from "@widgets/news";
+import { Wrapper } from "@widgets/layouts/wrapper";
 
 export const NewsPage = () => {
   return (
-    <MainLayout data={data} title={"Новости"}>
-      {(item: any) => <News item={item} />}
+    <MainLayout title={"Новости"}>
+      <Wrapper data={data}>
+        {(item: any) => <News item={item} />}
+      </Wrapper>
+      <Wrapper>
+        dawdadw
+      </Wrapper>
     </MainLayout>
   )
 }
-

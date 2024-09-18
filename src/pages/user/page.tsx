@@ -1,22 +1,76 @@
-import { FormLayout, InputField } from "@shared/components"
-import { MainLayout } from "@widgets/main-layout"
+import { FormLayout, InputField } from "@shared/components";
+import { MainLayout } from "@widgets/layouts/main-layout";
+import { Wrapper } from "@widgets/layouts/wrapper";
+import { AppDispatch, RootState } from "app/store";
+import { useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { getUser, updateUser } from "./model";
+import { notification, Spin } from "antd";
+import { UpdateUserDto } from "@entities/api-gen";
 
 export const UserSinglePage = () => {
-  const onSubmit = () => {
+  const dispatch: AppDispatch = useDispatch()
+  const userId = useSelector((state: RootState) => state.user.user?.id)
+  const user = useSelector((state: RootState) => state.getUser.user)
+  const userIsLoading = useSelector((state: RootState) => state.getUser.isLoading)
+  const userError = useSelector((state: RootState) => state.getUser.error)
+  const updateUserError = useSelector((state: RootState) => state.updateUser.error)
 
+  useEffect(() => {
+    if (userId) {
+      dispatch(getUser(userId))
+    }
+  }, [userId, dispatch])
+
+  if (userIsLoading) {
+    return (
+      <div className="centered">
+        <Spin tip="Загрузка данных пользователя..." />
+      </div>
+    );
   }
+
+  if (userError) {
+    return <div>Ошибка: {userError}</div>
+  }
+
+  if (!user) {
+    return <div>Пользователь не найден</div>
+  }
+
+  const onSubmit = (data: UpdateUserDto) => {
+    try {
+      dispatch(updateUser({userId, data}))
+      notification.success({ message: 'Данные пользователя обновлены' })
+    } catch(e) {
+      notification.error({
+        message: `Произошла ошибка при обновлении данных пользователя: ${updateUserError}`,
+      })
+    }
+  }
+
   return (
-    <MainLayout title={"фцв"}>
-      <FormLayout onSubmit={onSubmit}>
-        <InputField 
-          field={"firstName"}
-          placeholder="Имя"
-        />
-        <InputField 
-          field={"SurName"}
-          placeholder="Фамилия"
-        />
-      </FormLayout>
+    <MainLayout title={user?.username}>
+      <Wrapper>
+        <FormLayout onSubmit={onSubmit}>
+          <InputField 
+            field="name"
+            placeholder="Имя"
+            defaultValue={user.name}
+          />
+          <InputField 
+            field="surname"
+            placeholder="Фамилия"
+            defaultValue={user.surname}
+          />
+          <InputField 
+            field="email"
+            placeholder="Почта"
+            type="email"
+            defaultValue={user.email}
+          />
+        </FormLayout>
+      </Wrapper>
     </MainLayout>
   )
 }
