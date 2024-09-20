@@ -17,10 +17,14 @@ export interface UserInfoDto {
   name: string
   surname: string
   email: string
+  status: string
+  images: []
+  icon: []
 }
 
 export interface UpdateUserDto {
   name?: string
   surname?: string
   email?: string
+  status?: string
 }

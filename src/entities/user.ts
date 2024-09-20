@@ -3,7 +3,7 @@ import { $api, $apiImages } from "./axios-instance";
 
 export async function getUserInfoById(userId: string) {
   return $api.request({
-    url: `http://localhost:8080/api/users/${userId}`,
+    url: `users/${userId}/info`,
     method: "get",
   }).then((response) => response.data)
 }
@@ -32,11 +32,32 @@ export async function addImageToUser(args: {userId: string, data: File}) {
     console.log('Form data', key, value);
   })
 
-  console.log('userID', args.userId)
-  
   return $apiImages.request({
     url: `users/${args.userId}/images`,
     method: "post",
     data: formData,
+  }).then((response) => response.data)
+}
+
+export async function setImageToUser(args: {userId: string, data: File}) {
+  const formData = new FormData()
+
+  formData.append('icon', args.data)
+
+  formData.forEach((value, key) => {
+    console.log('Form data', key, value);
+  })
+
+  return $apiImages.request({
+    url: `users/${args.userId}/images/icon`,
+    method: "post",
+    data: formData,
+  }).then((response) => response.data)
+}
+
+export async function getImagesByUser(userId: string) {
+  return $api.request({
+    url: `users/${userId}/images`,
+    method: "get",
   }).then((response) => response.data)
 }

@@ -18,7 +18,7 @@ export const App = () => {
       theme={customTheme}
     >
       <ReduxProvider store={store}>
-        <Layout style={{ height: '100vh', backgroundColor: '#EDEEF0'}}>
+        <Layout style={{ minHeight: '100vh',backgroundColor: '#EDEEF0'}}>
           <AccessProvider>
             <Content>
               <RouterProvider router={router} />

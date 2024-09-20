@@ -2,7 +2,8 @@ import { NotFoundPage } from "@pages/error/not-found";
 import { LogInPage } from "@pages/log-in";
 import { NewsPage } from "@pages/news/archive";
 import { SignUpPage } from "@pages/sign-up";
-import { UserSinglePage } from "@pages/user";
+import { EditUserPage } from "@pages/user/edit-user";
+import { UserSinglePage } from "@pages/user/single";
 import { WelcomePage } from "@pages/welcome";
 import { createBrowserRouter } from "react-router-dom";
 
@@ -30,5 +31,9 @@ export const router = createBrowserRouter([
   {
     path: '/profile/:id',
     element: <UserSinglePage />
+  },
+  {
+    path: '/profile/:id/edit',
+    element: <EditUserPage />
   }
 ])

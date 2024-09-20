@@ -4,15 +4,17 @@ import { Wrapper } from "@widgets/layouts/wrapper";
 import { AppDispatch, RootState } from "app/store";
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { getUser, updateUser } from "./model";
+import { updateUser } from "./model";
 import { notification, Spin } from "antd";
 import { UpdateUserDto } from "@entities/api-gen";
 import { FileUpload } from "@features/upload";
+import { getImageUser, getUser } from "../single/model";
 
-export const UserSinglePage = () => {
+export const EditUserPage = () => {
   const dispatch: AppDispatch = useDispatch()
   const userId = useSelector((state: RootState) => state.user.user?.id)
   const user = useSelector((state: RootState) => state.getUser.user)
+  const userImages = useSelector((state: RootState) => state.getUser.userImages)
   const userIsLoading = useSelector((state: RootState) => state.getUser.isLoading)
   const userError = useSelector((state: RootState) => state.getUser.error)
   const updateUserError = useSelector((state: RootState) => state.updateUser.error)
@@ -20,6 +22,7 @@ export const UserSinglePage = () => {
   useEffect(() => {
     if (userId) {
       dispatch(getUser(userId))
+      dispatch(getImageUser(userId))
     }
   }, [userId, dispatch])
 
@@ -50,11 +53,16 @@ export const UserSinglePage = () => {
     return <div>Пользователь не найден</div>
   }
 
+  console.log(userImages)
+
   return (
     <MainLayout title={user?.username}>
       <Wrapper>
-        <FormLayout onSubmit={onSubmit}>
-          <FileUpload userId={user.id} />
+        <FormLayout onSubmit={onSubmit} textButton="Обновить">
+          <div>
+            <FileUpload userId={user.id} />
+            <img src={'http://localhost:8080/api/users/${userId}/images/6'} />
+          </div>
           <InputField 
             field="name"
             placeholder="Имя"
@@ -70,6 +78,11 @@ export const UserSinglePage = () => {
             placeholder="Почта"
             type="email"
             defaultValue={user.email}
+          />
+          <InputField 
+            field="status"
+            placeholder="Статус"
+            defaultValue={user.status}
           />
         </FormLayout>
       </Wrapper>

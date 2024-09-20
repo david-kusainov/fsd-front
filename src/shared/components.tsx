@@ -20,7 +20,7 @@ interface FieldProps {
 
 type InputFieldProps = InputProps & FieldProps;
 
-export const InputField = ({ field, ...props }: InputFieldProps) => {
+export const InputField = ({ field, defaultValue, ...props }: InputFieldProps) => {
   const { control, formState: { errors } } = useFormContext()
 
   const rules = {
@@ -29,61 +29,52 @@ export const InputField = ({ field, ...props }: InputFieldProps) => {
     maxLength: props.lengthMax ? { value: props.lengthMax, message: `* Максимальная длинна ${props.lengthMax}` } : undefined,
   }
 
-  if(props.password) {
-    return (
-      <div style={{margin: '20px 0 20px 0'}}>
-      <Controller
-        name={field}
-        control={control}
-        rules={rules}
-        render={({ field: { onChange, onBlur, value, ref } }) => (
-          <Input.Password
-            {...props}
-            onChange={onChange}
-            onBlur={onBlur}
-            value={value}
-            ref={ref}
-          />
-        )}
-      />
-      {errors[field] && <span style={{color: 'red'}}>{String(errors[field].message)}</span>}
-    </div>
-    )
-  }
-
   return (
-    <div style={{margin: '20px 0 20px 0'}}>
+    <div style={{ margin: '20px 0 20px 0' }}>
       <Controller
         name={field}
         control={control}
+        defaultValue={defaultValue}
         rules={rules}
         render={({ field: { onChange, onBlur, value, ref } }) => (
-          <Input
-            {...props}
-            onChange={onChange}
-            onBlur={onBlur}
-            value={value}
-            ref={ref}
-          />
+          props.password ? (
+            <Input.Password
+              {...props}
+              onChange={onChange}
+              onBlur={onBlur}
+              value={value || ''}
+              ref={ref}
+            />
+          ) : (
+            <Input
+              {...props}
+              onChange={onChange}
+              onBlur={onBlur}
+              value={value || ''}
+              ref={ref}
+            />
+          )
         )}
       />
-      {errors[field] && <span style={{color: 'red'}}>{String(errors[field].message)}</span>}
+      {errors[field] && <span style={{ color: 'red' }}>{String(errors[field].message)}</span>}
     </div>
   )
 }
 
+
 interface FormLayoutProps {
   children: ReactNode
   onSubmit: (data: any) => void
+  textButton?: string
 }
  
-export const FormLayout = ({children, onSubmit}: FormLayoutProps ) => {
+export const FormLayout = ({children, onSubmit, textButton}: FormLayoutProps ) => {
   const methods = useForm()
   return (
     <FormProvider {...methods}>
       <form onSubmit={methods.handleSubmit(onSubmit)}>
         {children}
-        <AntdSubmitButton>Отправить</AntdSubmitButton>
+        <AntdSubmitButton>{textButton ? textButton : 'Отправить'}</AntdSubmitButton>
       </form>
     </FormProvider>
   )
