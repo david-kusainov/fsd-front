@@ -61,3 +61,10 @@ export async function getImagesByUser(userId: string) {
     method: "get",
   }).then((response) => response.data)
 }
+
+export async function deleteImagesByUser(args: {userId: string, imageId: string}) {
+  return $api.request({
+    url: `users/${args.userId}/images/${args.imageId}`,
+    method: "delete",
+  }).then((response) => response.data)
+}

@@ -1,5 +1,5 @@
-import { UpdateUserDto, UserInfoDto } from "@entities/api-gen";
-import { getUserInfoById, updateUserById, getImagesByUser } from "@entities/user";
+import { UserInfoDto } from "@entities/api-gen";
+import { getUserInfoById, deleteImagesByUser } from "@entities/user";
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 
 export const getUser = createAsyncThunk(
@@ -11,19 +11,10 @@ export const getUser = createAsyncThunk(
   }
 )
 
-export const updateUser = createAsyncThunk(
-  'user/UpdateUserById',
-  async (args: {userId: any, data: UpdateUserDto}, { rejectWithValue }) => {
-    return await updateUserById(args)
-      .then((response) => response)
-      .catch((error) => rejectWithValue(error.response ? error.response.data : error.message))
-  }
-)
-
-export const getImageUser = createAsyncThunk(
-  'user/getImageUser',
-  async (userId: any, { rejectWithValue }) => {
-    return await getImagesByUser(userId)
+export const deleteImageUser = createAsyncThunk(
+  'user/deleteImageUser',
+  async ( args: {userId: any, imageId: any}, { rejectWithValue }) => {
+    return await deleteImagesByUser(args)
       .then((response) => response)
       .catch((error) => rejectWithValue(error.response ? error.response.data : error.message))
   }
@@ -34,59 +25,37 @@ export const getUserSlice = createSlice({
   initialState: {
     isLoading: false,
     user: null as UserInfoDto | null,
-    userImages: null as string | null,
-    error: null as string | null,
+    error: null as {error: string} | string | null,
   },
   reducers: {},
   extraReducers: (builder) => {
     builder
-    .addCase(getUser.pending, (state) => {
-      state.isLoading = true
-      state.error = null
-    })
-    .addCase(getUser.fulfilled, (state, action) => {
-      state.isLoading = false
-      state.user = action.payload
-    })
-    .addCase(getUser.rejected, (state, action) => {
-      state.isLoading = false
-      state.error = action.payload as string
-    })
-
-    .addCase(getImageUser.pending, (state) => {
-      state.isLoading = true
-      state.error = null
-    })
-    .addCase(getImageUser.fulfilled, (state, action) => {
-      state.isLoading = false
-      state.userImages = action.payload
-    })
-    .addCase(getImageUser.rejected, (state, action) => {
-      state.isLoading = false
-      state.error = action.payload as string
-    })
-  },
-})
-
-export const updateUserSlice = createSlice({
-  name: 'updateUser',
-  initialState: {
-    isLoading: false,
-    error: null as string | null,
-  },
-  reducers: {},
-  extraReducers: (builder) => {
-    builder
-    .addCase(updateUser.pending, (state) => {
-      state.isLoading = true
-      state.error = null
-    })
-    .addCase(updateUser.fulfilled, (state) => {
-      state.isLoading = false
-    })
-    .addCase(updateUser.rejected, (state, action) => {
-      state.isLoading = false
-      state.error = action.payload as string
-    })
-  }
+      .addCase(getUser.pending, (state) => {
+        state.isLoading = true
+        state.error = null
+      })
+      .addCase(getUser.fulfilled, (state, action) => {
+        state.isLoading = false
+        state.user = action.payload
+      })
+      .addCase(getUser.rejected, (state, action) => {
+        state.isLoading = false
+        state.error = action.payload as string
+      })
+      .addCase(deleteImageUser.pending, (state) => {
+        state.isLoading = true
+        state.error = null
+      })
+      .addCase(deleteImageUser.fulfilled, (state, action) => {
+        state.isLoading = false
+        if (state.user) {
+          const imageIdToDelete = action.meta.arg.imageId
+          state.user.images = state.user.images.filter((image: any) => image.id !== imageIdToDelete)
+        }
+      })
+      .addCase(deleteImageUser.rejected, (state, action) => {
+        state.isLoading = false
+        state.error = action.payload as string
+      })
+  }  
 })

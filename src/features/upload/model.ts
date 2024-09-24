@@ -17,13 +17,7 @@ export const userImageSlice = createSlice({
     error: null as string | null,
     success: false,
   },
-  reducers: {
-    resetUploadState(state) {
-      state.loading = false
-      state.error = null
-      state.success = false
-    },
-  },
+  reducers: {},
   extraReducers: (builder) => {
     builder
       .addCase(uploadUserImage.pending, (state) => {

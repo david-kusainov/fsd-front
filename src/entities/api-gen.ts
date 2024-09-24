@@ -18,7 +18,7 @@ export interface UserInfoDto {
   surname: string
   email: string
   status: string
-  images: []
+  images: { id: number }[]
   icon: []
 }
 

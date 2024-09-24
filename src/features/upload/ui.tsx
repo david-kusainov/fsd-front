@@ -1,49 +1,40 @@
 import { AppDispatch, RootState } from 'app/store';
-import React, { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { uploadUserImage, userImageSlice } from './model';
+import { AntdButton } from '@shared/components';
+import { notification, Upload } from 'antd';
+import { uploadUserImage } from './model';
+import ImgCrop from 'antd-img-crop'
 
 interface FileUploadProps {
   userId: string
 }
 
-export const FileUpload = ({userId}: FileUploadProps) => {
-  const dispatch: AppDispatch = useDispatch()
+export const FileUpload = ({ userId }: FileUploadProps) => {
   const { loading, error, success } = useSelector((state: RootState) => state.userImage)
-  const [selectedFile, setSelectedFile] = useState<File | null>(null)
-
-  const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    if (event.target.files && event.target.files.length > 0) {
-      setSelectedFile(event.target.files[0])
-    }
-  }
-
-  const handleUpload = () => {
-    if (!selectedFile) {
-      alert('Выберите файл для загрузки.')
-      return
-    }
-    dispatch(uploadUserImage({ userId, file: selectedFile }))
-  }
-
-  const handleReset = () => {
-    setSelectedFile(null)
-    dispatch(userImageSlice.actions.resetUploadState())
-  }
+  const dispatch: AppDispatch = useDispatch()
 
   return (
     <div>
-      <input type="file" onChange={handleFileChange} />
-      <button onClick={handleUpload} disabled={loading || !selectedFile}>
-        {loading ? 'Загрузка...' : 'Загрузить'}
-      </button>
-      {error && (
-        <p style={{ color: 'red' }}>
-          Ошибка: {typeof error === 'string' ? error : JSON.stringify(error)}
-        </p>
-      )}
-      {success && <p style={{ color: 'green' }}>Файл успешно загружен!</p>}
-      <button onClick={handleReset}>Сбросить</button>
+      <ImgCrop rotationSlider showReset>
+        <Upload
+          customRequest={(options) => {
+            const { file, onSuccess, onProgress } = options
+            dispatch(uploadUserImage({ userId, file: file as File }))
+            onProgress?.({ percent: 100 })
+            onSuccess?.({
+              message: success && notification.success({ message: 'Файл успешно загружен!' }),
+            })
+            // success && notification.success({ message: 'Файл успешно загружен!' })
+            error && notification.error({ message: 'Ошибка загрузки файла', description: JSON.stringify(error) })
+          }}
+          disabled={loading}
+          showUploadList={false}
+        >
+          <AntdButton>
+            {loading ? 'Загрузка...' : 'Загрузить'}
+          </AntdButton>
+        </Upload>
+      </ImgCrop>
     </div>
   )
 }

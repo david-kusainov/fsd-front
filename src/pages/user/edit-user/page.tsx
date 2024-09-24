@@ -7,14 +7,12 @@ import { useDispatch, useSelector } from "react-redux";
 import { updateUser } from "./model";
 import { notification, Spin } from "antd";
 import { UpdateUserDto } from "@entities/api-gen";
-import { FileUpload } from "@features/upload";
-import { getImageUser, getUser } from "../single/model";
+import { getUser } from "../single/model";
 
 export const EditUserPage = () => {
   const dispatch: AppDispatch = useDispatch()
   const userId = useSelector((state: RootState) => state.user.user?.id)
   const user = useSelector((state: RootState) => state.getUser.user)
-  const userImages = useSelector((state: RootState) => state.getUser.userImages)
   const userIsLoading = useSelector((state: RootState) => state.getUser.isLoading)
   const userError = useSelector((state: RootState) => state.getUser.error)
   const updateUserError = useSelector((state: RootState) => state.updateUser.error)
@@ -22,7 +20,6 @@ export const EditUserPage = () => {
   useEffect(() => {
     if (userId) {
       dispatch(getUser(userId))
-      dispatch(getImageUser(userId))
     }
   }, [userId, dispatch])
 
@@ -46,23 +43,25 @@ export const EditUserPage = () => {
   }
 
   if (userError) {
-    return <div>Ошибка: {userError}</div>
+    let errorMessage: string
+    
+    if (typeof userError === 'string') {
+      errorMessage = userError
+    } else {
+      errorMessage = userError?.error || "Неизвестная ошибка"
+    }
+  
+    return <div>Ошибка: {errorMessage}</div>
   }
 
   if (!user) {
     return <div>Пользователь не найден</div>
   }
 
-  console.log(userImages)
-
   return (
     <MainLayout title={user?.username}>
       <Wrapper>
         <FormLayout onSubmit={onSubmit} textButton="Обновить">
-          <div>
-            <FileUpload userId={user.id} />
-            <img src={'http://localhost:8080/api/users/${userId}/images/6'} />
-          </div>
           <InputField 
             field="name"
             placeholder="Имя"
