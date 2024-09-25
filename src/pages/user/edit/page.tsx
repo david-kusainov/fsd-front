@@ -15,7 +15,6 @@ export const EditUserPage = () => {
   const user = useSelector((state: RootState) => state.getUser.user)
   const userIsLoading = useSelector((state: RootState) => state.getUser.isLoading)
   const userError = useSelector((state: RootState) => state.getUser.error)
-  const updateUserError = useSelector((state: RootState) => state.updateUser.error)
 
   useEffect(() => {
     if (userId) {
@@ -23,16 +22,18 @@ export const EditUserPage = () => {
     }
   }, [userId, dispatch])
 
-  const onSubmit = (data: UpdateUserDto) => {
+  const onSubmit = async(data: UpdateUserDto) => {
     try {
-      dispatch(updateUser({ userId, data }))
+      await dispatch(updateUser({ userId, data })).unwrap()
       notification.success({ message: 'Данные пользователя обновлены' })
-    } catch (e) {
+    } catch (e: any) {
+      console.error(e)
       notification.error({
-        message: `Произошла ошибка при обновлении данных пользователя: ${updateUserError}`,
+        message: `Произошла ошибка при обновлении данных пользователя`,
       })
     }
   }
+  
 
   if (userIsLoading) {
     return (
@@ -50,7 +51,7 @@ export const EditUserPage = () => {
     } else {
       errorMessage = userError?.error || "Неизвестная ошибка"
     }
-  
+    console.log(errorMessage)
     return <div>Ошибка: {errorMessage}</div>
   }
 

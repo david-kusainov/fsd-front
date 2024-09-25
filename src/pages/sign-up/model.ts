@@ -10,8 +10,8 @@ export const signUp = createAsyncThunk(
       role: "ROLE_USER"
     }
     return await createSignUp(userData)
-      .then((response) => response.data.token)
-      .catch((error) => rejectWithValue(error.response ? error.response.data : error.message));
+      .then((response) => response)
+      .catch((error) => rejectWithValue(error.response ? error.response.data : error.message))
   }
 )
 

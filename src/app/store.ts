@@ -1,7 +1,7 @@
 import { userImageSlice } from '@features/upload';
 import { logInSlice } from '@pages/log-in';
 import { signUpSlice } from '@pages/sign-up'
-import { updateUserSlice } from '@pages/user/edit-user';
+import { updateUserSlice } from '@pages/user/edit';
 import { getUserSlice } from '@pages/user/single';
 import { configureStore } from '@reduxjs/toolkit'
 import { userSlice } from '@widgets/provider';

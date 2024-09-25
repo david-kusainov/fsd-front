@@ -2,7 +2,7 @@ import { NotFoundPage } from "@pages/error/not-found";
 import { LogInPage } from "@pages/log-in";
 import { NewsPage } from "@pages/news/archive";
 import { SignUpPage } from "@pages/sign-up";
-import { EditUserPage } from "@pages/user/edit-user";
+import { EditUserPage } from "@pages/user/edit";
 import { UserSinglePage } from "@pages/user/single";
 import { WelcomePage } from "@pages/welcome";
 import { createBrowserRouter } from "react-router-dom";

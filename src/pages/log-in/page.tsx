@@ -9,16 +9,23 @@ import Cookies from "js-cookie"
 import { useNavigate } from "react-router-dom"
 import { userSlice } from "@widgets/provider";
 import { jwtDecode } from "jwt-decode"
+import { notification } from "antd"
 
 export const LogInPage = () => {
   const dispatch: AppDispatch = useDispatch()
   const navigate = useNavigate()
+
   const onSubmit = async (data: LogInDto) => {
-    const token = await dispatch(logIn(data))
-    const decoded = jwtDecode(token.payload)
-    Cookies.set('token', token.payload)
-    dispatch(userSlice.actions.setUser(decoded))
-    navigate('/')
+    try {
+      const token = await dispatch(logIn(data)).unwrap()
+      const decoded = jwtDecode(token.payload)
+      Cookies.set('token', token.payload)
+      dispatch(userSlice.actions.setUser(decoded))
+      navigate('/')
+    } catch (e) {
+      console.error(e)
+      notification.error({message: 'Произошла ошибка во время входа'})
+    }
   }
 
   return (

@@ -9,16 +9,23 @@ import Cookies from "js-cookie"
 import { jwtDecode } from "jwt-decode"
 import { userSlice } from "@widgets/provider"
 import { useNavigate } from "react-router-dom"
+import { notification } from "antd"
 
 export const SignUpPage = () => {
   const dispatch: AppDispatch = useDispatch()
   const navigate = useNavigate()
+  
   const onSubmit = async (data: SignUpDto) => {
-    const token = await dispatch(signUp(data))
-    const decoded = jwtDecode(token.payload)
-    Cookies.set('token', token.payload)
-    dispatch(userSlice.actions.setUser(decoded))
-    navigate('/')
+    try {
+      const token = await dispatch(signUp(data)).unwrap()
+      const decoded = jwtDecode(token.payload)
+      Cookies.set('token', token.payload)
+      dispatch(userSlice.actions.setUser(decoded))
+      navigate('/')
+    } catch (e) {
+      console.error(e)
+      notification.error({message: 'Произошла ошибка во время регистрации'})
+    }
   }
 
   return (
