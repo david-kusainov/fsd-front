@@ -13,7 +13,7 @@ export const store = configureStore({
     logIn: logInSlice.reducer,
     getUser: getUserSlice.reducer,
     updateUser: updateUserSlice.reducer,
-    userImage: userImageSlice.reducer
+    userImage: userImageSlice.reducer,
   }
 })
 

@@ -33,7 +33,6 @@ export const EditUserPage = () => {
       })
     }
   }
-  
 
   if (userIsLoading) {
     return (
@@ -60,7 +59,7 @@ export const EditUserPage = () => {
   }
 
   return (
-    <MainLayout title={user?.username}>
+    <MainLayout title={user?.username} back>
       <Wrapper>
         <FormLayout onSubmit={onSubmit} textButton="Обновить">
           <InputField 

@@ -1,2 +1,2 @@
 export { UserSinglePage } from "./page"
-export { getUserSlice } from "./model"
+export { getUserSlice, deleteImageUser } from "./model"

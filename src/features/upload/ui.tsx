@@ -4,17 +4,19 @@ import { AntdButton } from '@shared/components';
 import { notification, Upload } from 'antd';
 import { uploadUserImage } from './model';
 import ImgCrop from 'antd-img-crop'
+import { useNavigate } from 'react-router-dom';
 
 interface FileUploadProps {
   userId: string
 }
 
 export const FileUpload = ({ userId }: FileUploadProps) => {
-  const { loading, error, success } = useSelector((state: RootState) => state.userImage)
+  const { loading, error } = useSelector((state: RootState) => state.userImage)
   const dispatch: AppDispatch = useDispatch()
+  const navigate = useNavigate()
 
   return (
-    <div>
+    <div style={{paddingBottom: '20px'}}>
       <ImgCrop rotationSlider showReset>
         <Upload
           customRequest={(options) => {
@@ -22,8 +24,9 @@ export const FileUpload = ({ userId }: FileUploadProps) => {
             dispatch(uploadUserImage({ userId, file: file as File }))
             onProgress?.({ percent: 100 })
             onSuccess?.({
-              message: success && notification.success({ message: 'Файл успешно загружен!' }),
+              message: notification.success({ message: 'Файл успешно загружен!' }),
             })
+            navigate(0)
             // success && notification.success({ message: 'Файл успешно загружен!' })
             error && notification.error({ message: 'Ошибка загрузки файла', description: JSON.stringify(error) })
           }}
