@@ -28,6 +28,7 @@ export const userImageSlice = createSlice({
       .addCase(uploadUserImage.fulfilled, (state) => {
         state.loading = false
         state.success = true
+        window.location.reload()
       })
       .addCase(uploadUserImage.rejected, (state, action: PayloadAction<any>) => {
         state.loading = false

@@ -39,19 +39,10 @@ export async function addImageToUser(args: {userId: string, data: File}) {
   }).then((response) => response.data)
 }
 
-export async function setImageToUser(args: {userId: string, data: File}) {
-  const formData = new FormData()
-
-  formData.append('icon', args.data)
-
-  formData.forEach((value, key) => {
-    console.log('Form data', key, value);
-  })
-
+export async function setAvatarToUser(args: {userId: string, imageId: string}) {
   return $apiImages.request({
-    url: `users/${args.userId}/images/icon`,
-    method: "post",
-    data: formData,
+    url: `users/${args.userId}/images/icon/${args.imageId}`,
+    method: "put",
   }).then((response) => response.data)
 }
 

@@ -1,5 +1,5 @@
 import { UserInfoDto } from "@entities/api-gen";
-import { getUserInfoById, deleteImagesByUser } from "@entities/user";
+import { getUserInfoById, deleteImagesByUser, setAvatarToUser } from "@entities/user";
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 
 export const getUser = createAsyncThunk(
@@ -15,6 +15,15 @@ export const deleteImageUser = createAsyncThunk(
   'user/deleteImageUser',
   async ( args: {userId: any, imageId: any}, { rejectWithValue }) => {
     return await deleteImagesByUser(args)
+      .then((response) => response)
+      .catch((error) => rejectWithValue(error.response ? error.response.data : error.message))
+  }
+)
+
+export const setAvatarUser = createAsyncThunk(
+  'user/setAvatarUser',
+  async (args: {userId: any, imageId: any}, { rejectWithValue }) => {
+    return await setAvatarToUser(args)
       .then((response) => response)
       .catch((error) => rejectWithValue(error.response ? error.response.data : error.message))
   }
@@ -49,11 +58,26 @@ export const getUserSlice = createSlice({
       .addCase(deleteImageUser.fulfilled, (state, action) => {
         state.isLoading = false
         if (state.user) {
-          const imageIdToDelete = action.meta.arg.imageId
-          state.user.images = state.user.images.filter((image: any) => image.id !== imageIdToDelete)
+          state.user.icon = action.payload
+          window.location.reload()
         }
       })
       .addCase(deleteImageUser.rejected, (state, action) => {
+        state.isLoading = false
+        state.error = action.payload as string
+      })
+      .addCase(setAvatarUser.pending, (state) => {
+        state.isLoading = true
+        state.error = null
+      })
+      .addCase(setAvatarUser.fulfilled, (state, action) => {
+        state.isLoading = false
+        if (state.user) {
+          state.user.icon = action.payload
+          window.location.reload()
+        }
+      })
+      .addCase(setAvatarUser.rejected, (state, action) => {
         state.isLoading = false
         state.error = action.payload as string
       })

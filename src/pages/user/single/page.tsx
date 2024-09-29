@@ -4,7 +4,7 @@ import { AppDispatch, RootState } from "app/store";
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { getUser } from "./model";
-import { Spin, Tabs, TabsProps } from "antd";
+import { Avatar, Spin, Tabs, TabsProps } from "antd";
 import { AntdButton } from "@shared/components";
 import styled from "styled-components";
 import { useNavigate } from "react-router-dom";
@@ -70,12 +70,11 @@ export const UserSinglePage = () => {
     <MainLayout title={"Профиль"}>
       <Wrapper>
         <UserInfo>
-          <img 
-            src={`http://localhost:8080/api/images/7`}
+          <Avatar 
+            src={`http://localhost:8080/api/images/${user.icon}`}
             style={{
               width: '120px',
               height: '120px',
-              borderRadius: '50%',
             }}
           />
           <div>
