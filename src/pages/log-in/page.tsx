@@ -18,8 +18,9 @@ export const LogInPage = () => {
   const onSubmit = async (data: LogInDto) => {
     try {
       const token = await dispatch(logIn(data)).unwrap()
-      const decoded = jwtDecode(token.payload)
-      Cookies.set('token', token.payload)
+      console.log(token)
+      const decoded = jwtDecode(token)
+      Cookies.set('token', token)
       dispatch(userSlice.actions.setUser(decoded))
       navigate('/')
     } catch (e) {

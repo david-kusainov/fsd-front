@@ -18,8 +18,8 @@ export const SignUpPage = () => {
   const onSubmit = async (data: SignUpDto) => {
     try {
       const token = await dispatch(signUp(data)).unwrap()
-      const decoded = jwtDecode(token.payload)
-      Cookies.set('token', token.payload)
+      const decoded = jwtDecode(token)
+      Cookies.set('token', token)
       dispatch(userSlice.actions.setUser(decoded))
       navigate('/')
     } catch (e) {
