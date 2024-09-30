@@ -1,4 +1,4 @@
-import { UpdateUserDto} from "./api-gen";
+import { UpdateUserDto} from "./dto";
 import { $api, $apiImages } from "./axios-instance";
 
 export async function getUserInfoById(userId: string) {

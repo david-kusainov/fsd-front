@@ -1,4 +1,4 @@
-import { UpdateUserDto } from "@entities/api-gen";
+import { UpdateUserDto } from "@entities/dto";
 import { updateUserById } from "@entities/user";
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 

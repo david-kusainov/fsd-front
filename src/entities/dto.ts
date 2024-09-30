@@ -28,3 +28,22 @@ export interface UpdateUserDto {
   email?: string
   status?: string
 }
+
+export interface CreateGroupDto {
+  title: string
+  description: string
+  icon: File
+}
+
+export interface GroupDto {
+  id: number
+  title: string
+  description: string
+  icon: number
+}
+
+export interface ParamsGroupDto {
+  query?: string
+  page: number
+  size: number
+}

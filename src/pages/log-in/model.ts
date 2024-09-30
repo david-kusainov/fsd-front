@@ -1,4 +1,4 @@
-import { LogInDto } from "@entities/api-gen";
+import { LogInDto } from "@entities/dto";
 import { createLogIn } from "@entities/auth";
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 

@@ -1,6 +1,7 @@
 import { Button, ButtonProps, Input, InputProps } from "antd"
-import { ReactNode, RefAttributes } from "react"
+import { ReactNode, RefAttributes, useEffect } from "react"
 import { Controller, FormProvider, useForm, useFormContext } from "react-hook-form"
+import { useNavigate } from "react-router-dom"
 
 export const AntdButton = (props: JSX.IntrinsicAttributes & ButtonProps & RefAttributes<HTMLAnchorElement | HTMLButtonElement>) => {
   return <Button type={props.type || 'primary'} block {...props} />
@@ -66,15 +67,30 @@ interface FormLayoutProps {
   children: ReactNode
   onSubmit: (data: any) => void
   textButton?: string
+  route?: string
 }
 
-export const FormLayout = ({children, onSubmit, textButton}: FormLayoutProps ) => {
+export const FormLayout = ({ children, onSubmit, textButton, route }: FormLayoutProps) => {
   const methods = useForm()
+  const navigate = useNavigate()
+
+  useEffect(() => {
+    const subscription = methods.watch(() => {
+      if (methods.formState.isSubmitSuccessful && route) {
+        navigate(route)
+      }
+    })
+
+    return () => subscription.unsubscribe()
+  }, [methods, navigate, route])
+
   return (
     <FormProvider {...methods}>
       <form onSubmit={methods.handleSubmit(onSubmit)}>
         {children}
-        <AntdSubmitButton>{textButton ? textButton : 'Отправить'}</AntdSubmitButton>
+        <AntdSubmitButton>
+          {textButton ? textButton : 'Отправить'}
+        </AntdSubmitButton>
       </form>
     </FormProvider>
   )

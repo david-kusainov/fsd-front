@@ -6,7 +6,7 @@ import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { updateUser } from "./model";
 import { notification, Spin } from "antd";
-import { UpdateUserDto } from "@entities/api-gen";
+import { UpdateUserDto } from "@entities/dto";
 import { getUser } from "../single/model";
 
 export const EditUserPage = () => {

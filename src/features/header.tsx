@@ -27,8 +27,8 @@ export const Head = ({ title }: HeadProps) => {
     },
     {
       key: '3',
-      label: 'Мои участки',
-      link: '/private-office/area'
+      label: 'Группы',
+      link: '/groups'
     },
     {
       key: '4',

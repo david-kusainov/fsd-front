@@ -17,9 +17,9 @@ export const FileUpload = ({ userId }: FileUploadProps) => {
     <div style={{paddingBottom: '20px'}}>
       <ImgCrop rotationSlider showReset>
         <Upload
-          customRequest={(options) => {
+          customRequest={ async (options) => {
             const { file, onSuccess, onProgress } = options
-            dispatch(uploadUserImage({ userId, file: file as File }))
+            await dispatch(uploadUserImage({ userId, file: file as File })).unwrap()
             onProgress?.({ percent: 100 })
             onSuccess?.({
               message: notification.success({ message: 'Файл успешно загружен!' }),

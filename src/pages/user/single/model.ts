@@ -1,4 +1,4 @@
-import { UserInfoDto } from "@entities/api-gen";
+import { UserInfoDto } from "@entities/dto";
 import { getUserInfoById, deleteImagesByUser, setAvatarToUser } from "@entities/user";
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 

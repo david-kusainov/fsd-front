@@ -1,5 +1,5 @@
 import axios from 'axios'
-import { LogInDto, SignUpDto } from './api-gen'
+import { LogInDto, SignUpDto } from './dto'
 
 export async function createLogIn(data: LogInDto) {
   return axios.request({
