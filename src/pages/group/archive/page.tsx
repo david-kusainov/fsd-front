@@ -3,13 +3,14 @@ import { useDispatch, useSelector } from "react-redux";
 import { AppDispatch, RootState } from "app/store";
 import { getAllGroupsThunk } from "./model";
 import { MainLayout } from "@widgets/layouts/main-layout";
-import { Wrapper } from "@widgets/layouts/wrapper";
 import { Spin } from "antd";
-import { GroupDto } from "@entities/dto";
+import { AntdButton } from "@shared/components";
+import { GroupCard } from "@features/group-card";
 
 export const ArchiveGroupPage = () => {
   const dispatch: AppDispatch = useDispatch()
   const { isLoading, error, groups } = useSelector((state: RootState) => state.archiveGroups)
+  const userId = useSelector((state: RootState) => state.user.user?.id)
 
   useEffect(() => {
     dispatch(getAllGroupsThunk()).unwrap()
@@ -31,16 +32,19 @@ export const ArchiveGroupPage = () => {
     )
   }
 
+  if(!userId) {
+    return <div className="centered">Пользователь не найден</div>
+  }
+
   return (
     <MainLayout title="Группы">
-      <Wrapper data={groups}>
-        {(item: GroupDto) => <div>
-            <img src={`http://localhost:8080/api/images/${item.icon}`}/>
-            {item.title}<br />
-            {item.description}
-          </div>
-        }
-      </Wrapper>
+      <AntdButton 
+        route={`/group/create`} 
+        style={{ marginBottom: '20px' }}
+      >
+        Создать группу
+      </AntdButton>
+      <GroupCard groupData={groups}/>
     </MainLayout>
   )
 }

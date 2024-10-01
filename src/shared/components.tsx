@@ -3,8 +3,20 @@ import { ReactNode, RefAttributes, useEffect } from "react"
 import { Controller, FormProvider, useForm, useFormContext } from "react-hook-form"
 import { useNavigate } from "react-router-dom"
 
-export const AntdButton = (props: JSX.IntrinsicAttributes & ButtonProps & RefAttributes<HTMLAnchorElement | HTMLButtonElement>) => {
-  return <Button type={props.type || 'primary'} block {...props} />
+interface AntdButtonProps {
+  route?: string
+}
+export const AntdButton = (props: JSX.IntrinsicAttributes & ButtonProps & RefAttributes<HTMLAnchorElement | HTMLButtonElement> & AntdButtonProps) => {
+  const navigate = useNavigate()
+  return (
+    <>
+      {props.route ? (
+        <Button type={props.type || 'primary'} block {...props} onClick={() => navigate(props.route || '')} />
+      ) : (
+        <Button type={props.type || 'primary'} block {...props} />
+      )}
+    </>
+  )
 }
 
 export const AntdSubmitButton = (props: JSX.IntrinsicAttributes & ButtonProps & RefAttributes<HTMLAnchorElement | HTMLButtonElement>) => {
@@ -75,14 +87,10 @@ export const FormLayout = ({ children, onSubmit, textButton, route }: FormLayout
   const navigate = useNavigate()
 
   useEffect(() => {
-    const subscription = methods.watch(() => {
-      if (methods.formState.isSubmitSuccessful && route) {
-        navigate(route)
-      }
-    })
-
-    return () => subscription.unsubscribe()
-  }, [methods, navigate, route])
+    if (methods.formState.isSubmitSuccessful && route) {
+      navigate(route)
+    }
+  }, [methods.formState.isSubmitSuccessful, navigate, route])
 
   return (
     <FormProvider {...methods}>

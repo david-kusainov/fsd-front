@@ -30,8 +30,8 @@ export const FileUpload = ({ userId }: FileUploadProps) => {
           disabled={loading}
           showUploadList={false}
         >
-          <AntdButton>
-            {loading ? 'Загрузка...' : 'Загрузить'}
+          <AntdButton loading={loading}>
+            Загрузить
           </AntdButton>
         </Upload>
       </ImgCrop>

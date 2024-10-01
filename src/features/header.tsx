@@ -23,7 +23,7 @@ export const Head = ({ title }: HeadProps) => {
     {
       key: '2',
       label: 'Новости',
-      link: '/news'
+      link: '/'
     },
     {
       key: '3',

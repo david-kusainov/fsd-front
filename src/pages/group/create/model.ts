@@ -13,21 +13,21 @@ export const createGroups = createAsyncThunk(
 export const createGroupSlice = createSlice({
   name: 'createGroup',
   initialState: {
-    isLoading: false,
+    loading: false,
     error: null as string | null,
   },
   reducers: {},
   extraReducers: (builder) => {
     builder
       .addCase(createGroups.pending, (state) => {
-        state.isLoading = true
+        state.loading = true
         state.error = null
       })
       .addCase(createGroups.fulfilled, (state) => {
-        state.isLoading = false
+        state.loading = false
       })
       .addCase(createGroups.rejected, (state, action) => {
-        state.isLoading = false
+        state.loading = false
         state.error = action.payload as string
       })
   }

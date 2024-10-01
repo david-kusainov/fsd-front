@@ -50,11 +50,12 @@ export const ImagesGridTab = () => {
       errorMessage = userError?.error || "Неизвестная ошибка"
     }
     console.log(errorMessage)
-    return <div>Ошибка: {errorMessage}</div>
+    
+    return <div className="centered">Ошибка: {errorMessage}</div>
   }
 
   if (!user) {
-    return <div>Пользователь не найден</div>
+    return <div className="centered">Пользователь не найден</div>
   }
   
   return (

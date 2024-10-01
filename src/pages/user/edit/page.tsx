@@ -51,7 +51,12 @@ export const EditUserPage = () => {
       errorMessage = userError?.error || "Неизвестная ошибка"
     }
     console.log(errorMessage)
-    return <div>Ошибка: {errorMessage}</div>
+    
+    return (
+      <div className="centered">
+        Ошибка загрузки: {errorMessage}
+      </div>
+    )
   }
 
   if (!user) {

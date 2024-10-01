@@ -11,7 +11,7 @@ import { useState } from "react";
 export const CreateGroupPage = () => {
   const dispatch: AppDispatch = useDispatch()
   const userId = useSelector((state: RootState) => state.user.user?.id)
-  const loading = useSelector((state: RootState) => state.createGroup.isLoading)
+  const { loading, error } = useSelector((state: RootState) => state.createGroup);
   const [file, setFile] = useState<File | null>(null)
 
   const onSubmit = (data: any) => {
@@ -32,16 +32,34 @@ export const CreateGroupPage = () => {
     }
   }
 
+  if(error) {
+    <div className="centered">
+      Ошибка загрузки: {error}
+    </div>
+  }
+
   if (!userId) {
     return <div>Пользователь не найден</div>
   }
 
   return (
-    <MainLayout title={"Создание группы"}>
+    <MainLayout 
+      title={"Создание группы"}
+    >
       <Wrapper>
-        <FormLayout onSubmit={onSubmit} textButton="Создать" route="/">
-          <InputField field="title" placeholder="Название группы" />
-          <InputField field="description" placeholder="Описание группы" />
+        <FormLayout
+          onSubmit={onSubmit}
+          textButton="Создать"
+          route={`/group`}
+        >
+          <InputField
+            field="title"
+            placeholder="Название группы"
+          />
+          <InputField
+            field="description"
+            placeholder="Описание группы"
+          />
           <ImgCrop rotationSlider showReset>
             <Upload
               beforeUpload={(file) => {

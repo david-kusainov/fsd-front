@@ -58,12 +58,17 @@ export const UserSinglePage = () => {
     } else {
       errorMessage = userError?.error || "Неизвестная ошибка"
     }
-  
-    return <div>Ошибка: {errorMessage}</div>
+    console.log(errorMessage)
+    
+    return (
+      <div className="centered">
+        Ошибка загрузки: {errorMessage}
+      </div>
+    )
   }
 
   if (!user) {
-    return <div>Пользователь не найден</div>
+    return <div className="centered">Пользователь не найден</div>
   }
 
   return(
