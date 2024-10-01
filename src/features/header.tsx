@@ -1,8 +1,8 @@
 import styled, { createGlobalStyle } from "styled-components";
 import logo from "@public/Logo.svg";
 import { Link } from "react-router-dom";
-import { Dropdown, Menu, Space } from "antd";
-import { DownOutlined } from "@ant-design/icons";
+import { Avatar, Dropdown, Menu, Space } from "antd";
+import { DownOutlined, UserOutlined } from "@ant-design/icons";
 import { useSelector } from "react-redux";
 import { RootState } from "app/store";
 
@@ -10,9 +10,9 @@ interface HeadProps {
   title: string
 }
 
-
 export const Head = ({ title }: HeadProps) => {
   const userId = useSelector((state: RootState) => state.user.user?.id)
+  const user = useSelector((state: RootState) => state.getUser.user)
 
   const menuItems = [
     {
@@ -41,7 +41,7 @@ export const Head = ({ title }: HeadProps) => {
       link: '/private-office/users'
     }
   ]
-  
+
   const menu = (
     <Menu>
       {menuItems.map(item => (
@@ -60,14 +60,18 @@ export const Head = ({ title }: HeadProps) => {
         </Link>
         {title}
       </Title>
-      <UserDropdown overlay={menu} trigger={['click']} placement="bottomRight">
+      <Dropdown overlay={menu} trigger={['click']} placement="bottomRight">
         <TriggerLink onClick={(e) => e.preventDefault()}>
           <Space>
-            <img src={logo} alt="Logo" />
+            <Avatar 
+              src={user?.icon ? `http://localhost:8080/api/images/${user.icon}` : undefined}
+              icon={user?.icon ? undefined : <UserOutlined />}
+              size={62}
+            />
             <DownOutlined />
           </Space>
         </TriggerLink>
-      </UserDropdown>
+      </Dropdown>
       <GlobalStyle />
     </Box>
   )
@@ -108,12 +112,7 @@ const Title = styled.div`
   img {
     margin-top: 10px;
     margin-right: 10px;
-    width: 50px;
-  }
-`
-const UserDropdown = styled(Dropdown)`
-  img {
-    width: 40px;
+    width: 60px;
   }
 `
 const TriggerLink = styled.a`

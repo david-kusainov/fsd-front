@@ -19,7 +19,7 @@ export interface UserInfoDto {
   email: string
   status: string
   images: { id: number }[]
-  icon: []
+  icon: number
 }
 
 export interface UpdateUserDto {

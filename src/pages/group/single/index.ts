@@ -1,0 +1,1 @@
+export { SingleGroupPage } from './page'

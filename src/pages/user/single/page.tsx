@@ -9,6 +9,7 @@ import { AntdButton } from "@shared/components";
 import styled from "styled-components";
 import { useNavigate } from "react-router-dom";
 import { ImagesGridTab } from "@pages/user/single/user-images-tab";
+import { UserOutlined } from "@ant-design/icons";
 
 const items: TabsProps['items'] = [
   {
@@ -77,10 +78,8 @@ export const UserSinglePage = () => {
         <UserInfo>
           <Avatar 
             src={`http://localhost:8080/api/images/${user.icon}`}
-            style={{
-              width: '120px',
-              height: '120px',
-            }}
+            icon={user.icon ? undefined : <UserOutlined />}
+            size={150}
           />
           <div>
             <UserName>{user.username}</UserName>

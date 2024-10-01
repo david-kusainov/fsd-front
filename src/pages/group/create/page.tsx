@@ -5,17 +5,24 @@ import { AppDispatch, RootState } from "app/store";
 import { useDispatch, useSelector } from "react-redux";
 import { createGroups } from "./model";
 import ImgCrop from "antd-img-crop";
-import { notification, Upload } from "antd";
+import { Avatar, notification, Upload } from "antd";
 import { useState } from "react";
+import { UserOutlined } from "@ant-design/icons";
 
 export const CreateGroupPage = () => {
   const dispatch: AppDispatch = useDispatch()
   const userId = useSelector((state: RootState) => state.user.user?.id)
-  const { loading, error } = useSelector((state: RootState) => state.createGroup);
+  const { loading, error } = useSelector((state: RootState) => state.createGroup)
   const [file, setFile] = useState<File | null>(null)
+  const [imageUrl, setImageUrl] = useState<string | undefined>(undefined)
 
   const onSubmit = (data: any) => {
     try {
+      if (!file) {
+        notification.error({ message: 'Загрузите файл изображения' })
+        return
+      }
+
       if (userId) {
         const formData = new FormData()
         formData.append("title", data.title)
@@ -27,19 +34,30 @@ export const CreateGroupPage = () => {
         notification.success({ message: 'Успешное создание группы' })
       }
     } catch (e) {
-      console.error(e)
+      console.error(e);
       notification.error({ message: 'Произошла ошибка при создании группы' })
     }
   }
 
-  if(error) {
-    <div className="centered">
-      Ошибка загрузки: {error}
-    </div>
+  const handleFileChange = (file: File) => {
+    setFile(file)
+    const reader = new FileReader()
+    reader.onloadend = () => {
+      setImageUrl(reader.result as string)
+    }
+    reader.readAsDataURL(file)
+  }
+
+  if (error) {
+    return (
+      <div className="centered">
+        Ошибка загрузки: {error}
+      </div>
+    )
   }
 
   if (!userId) {
-    return <div>Пользователь не найден</div>
+    return <div className="centered">Пользователь не найден</div>
   }
 
   return (
@@ -55,15 +73,24 @@ export const CreateGroupPage = () => {
           <InputField
             field="title"
             placeholder="Название группы"
+            isRequired
           />
           <InputField
             field="description"
             placeholder="Описание группы"
+            isRequired
           />
+          <Avatar 
+            src={imageUrl} 
+            size={100} 
+            style={{ marginBottom: '20px' }}
+            shape="square"
+            icon={imageUrl ? undefined : <UserOutlined />}
+          /> <br />
           <ImgCrop rotationSlider showReset>
             <Upload
               beforeUpload={(file) => {
-                setFile(file as File)
+                handleFileChange(file as File)
                 return false
               }}
               disabled={loading}
