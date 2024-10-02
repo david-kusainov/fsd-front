@@ -21,3 +21,10 @@ export const getAllGroups = async () => {
     method: "get",
   }).then((response) => response.data)
 }
+
+export const getGroupById = async (groupId: string) => {
+  return $api.request({
+    url: `groups/${groupId}`,
+    method: "get",
+  }).then((response) => response.data)
+}

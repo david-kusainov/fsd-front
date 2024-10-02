@@ -32,53 +32,53 @@ export const setAvatarUser = createAsyncThunk(
 export const getUserSlice = createSlice({
   name: 'getUser',
   initialState: {
-    isLoading: false,
+    loading: false,
     user: null as UserInfoDto | null,
-    error: null as {error: string} | string | null,
+    error: null as string | null,
   },
   reducers: {},
   extraReducers: (builder) => {
     builder
       .addCase(getUser.pending, (state) => {
-        state.isLoading = true
+        state.loading = true
         state.error = null
       })
       .addCase(getUser.fulfilled, (state, action) => {
-        state.isLoading = false
+        state.loading = false
         state.user = action.payload
       })
       .addCase(getUser.rejected, (state, action) => {
-        state.isLoading = false
+        state.loading = false
         state.error = action.payload as string
       })
       .addCase(deleteImageUser.pending, (state) => {
-        state.isLoading = true
+        state.loading = true
         state.error = null
       })
       .addCase(deleteImageUser.fulfilled, (state, action) => {
-        state.isLoading = false
+        state.loading = false
         if (state.user) {
           state.user.icon = action.payload
           window.location.reload()
         }
       })
       .addCase(deleteImageUser.rejected, (state, action) => {
-        state.isLoading = false
+        state.loading = false
         state.error = action.payload as string
       })
       .addCase(setAvatarUser.pending, (state) => {
-        state.isLoading = true
+        state.loading = true
         state.error = null
       })
       .addCase(setAvatarUser.fulfilled, (state, action) => {
-        state.isLoading = false
+        state.loading = false
         if (state.user) {
           state.user.icon = action.payload
           window.location.reload()
         }
       })
       .addCase(setAvatarUser.rejected, (state, action) => {
-        state.isLoading = false
+        state.loading = false
         state.error = action.payload as string
       })
   }  

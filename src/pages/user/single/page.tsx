@@ -4,7 +4,7 @@ import { AppDispatch, RootState } from "app/store";
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { getUser } from "./model";
-import { Avatar, Spin, Tabs, TabsProps } from "antd";
+import { Avatar, Tabs, TabsProps } from "antd";
 import { AntdButton } from "@shared/components";
 import styled from "styled-components";
 import { useNavigate } from "react-router-dom";
@@ -32,9 +32,7 @@ const items: TabsProps['items'] = [
 export const UserSinglePage = () => {
   const dispatch: AppDispatch = useDispatch()
   const userId = useSelector((state: RootState) => state.user.user?.id)
-  const user = useSelector((state: RootState) => state.getUser.user)
-  const userIsLoading = useSelector((state: RootState) => state.getUser.isLoading)
-  const userError = useSelector((state: RootState) => state.getUser.error)
+  const { user, loading, error } = useSelector((state: RootState) => state.getUser)
   const navigate = useNavigate()
 
   useEffect(() => {
@@ -43,47 +41,22 @@ export const UserSinglePage = () => {
     }
   }, [userId, dispatch])
 
-  if (userIsLoading) {
-    return (
-      <div className="centered">
-        <Spin tip="Загрузка данных пользователя..." />
-      </div>
-    )
-  }
-
-  if (userError) {
-    let errorMessage: string
-    
-    if (typeof userError === 'string') {
-      errorMessage = userError
-    } else {
-      errorMessage = userError?.error || "Неизвестная ошибка"
-    }
-    console.log(errorMessage)
-    
-    return (
-      <div className="centered">
-        Ошибка загрузки: {errorMessage}
-      </div>
-    )
-  }
-
-  if (!user) {
-    return <div className="centered">Пользователь не найден</div>
-  }
-
   return(
-    <MainLayout title={"Профиль"}>
+    <MainLayout
+      title={"Профиль"}
+      error={error ? error : undefined}
+      loading={loading}
+    >
       <Wrapper>
         <UserInfo>
           <Avatar 
-            src={`http://localhost:8080/api/images/${user.icon}`}
-            icon={user.icon ? undefined : <UserOutlined />}
+            src={`http://localhost:8080/api/images/${user?.icon}`}
+            icon={user?.icon ? undefined : <UserOutlined />}
             size={150}
           />
           <div>
-            <UserName>{user.username}</UserName>
-            <UserStatus>{user.status}</UserStatus>
+            <UserName>{user?.username}</UserName>
+            <UserStatus>{user?.status}</UserStatus>
           </div>
           <AntdButton 
             style={{ marginLeft: 'auto', width: '200px' }}

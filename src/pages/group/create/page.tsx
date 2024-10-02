@@ -48,27 +48,17 @@ export const CreateGroupPage = () => {
     reader.readAsDataURL(file)
   }
 
-  if (error) {
-    return (
-      <div className="centered">
-        Ошибка загрузки: {error}
-      </div>
-    )
-  }
-
-  if (!userId) {
-    return <div className="centered">Пользователь не найден</div>
-  }
-
   return (
     <MainLayout 
       title={"Создание группы"}
+      error={error ? error : undefined}
+      loading={loading}
     >
       <Wrapper>
         <FormLayout
           onSubmit={onSubmit}
           textButton="Создать"
-          route={`/group`}
+          route={`/groups`}
         >
           <InputField
             field="title"
@@ -79,6 +69,7 @@ export const CreateGroupPage = () => {
             field="description"
             placeholder="Описание группы"
             isRequired
+            maxLength={200}
           />
           <Avatar 
             src={imageUrl} 
