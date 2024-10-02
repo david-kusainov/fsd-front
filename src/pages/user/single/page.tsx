@@ -49,11 +49,13 @@ export const UserSinglePage = () => {
     >
       <Wrapper>
         <UserInfo>
-          <Avatar 
-            src={`http://localhost:8080/api/images/${user?.icon}`}
-            icon={user?.icon ? undefined : <UserOutlined />}
-            size={150}
-          />
+          <div>
+            <Avatar 
+              src={`http://localhost:8080/api/images/${user?.icon}`}
+              icon={user?.icon ? undefined : <UserOutlined />}
+              size={150}
+            />
+          </div>
           <div>
             <UserName>{user?.username}</UserName>
             <UserStatus>{user?.status}</UserStatus>

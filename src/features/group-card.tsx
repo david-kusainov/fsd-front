@@ -20,7 +20,7 @@ export const GroupCard = ({groupData}: GroupCardProps) => {
                 size={{ xs: 24, sm: 32, md: 40, lg: 64, xl: 80, xxl: 100 }}
               />
             </Link>
-            <Link to={`/group/${item.id}`}>
+            <Link to={`/group/${item.id}`} style={{ color: '#C571F8' }}>
               <Title style={{ marginTop: '35px' }}>
                 {item.title}
               </Title>

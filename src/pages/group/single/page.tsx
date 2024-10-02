@@ -26,11 +26,13 @@ export const SingleGroupPage = () => {
     >
       <Wrapper>
         <UserInfo>
-          <Avatar 
-            src={`http://localhost:8080/api/images/${group?.icon}`}
-            icon={group?.icon ? undefined : <UserOutlined />}
-            size={150}
-          />
+          <div>
+            <Avatar
+              src={`http://localhost:8080/api/images/${group?.icon}`}
+              icon={group?.icon ? undefined : <UserOutlined />}
+              size={150}
+            />
+          </div>
           <div>
             <GroupName>{group?.title}</GroupName>
             <div>{group?.description}</div>
@@ -48,4 +50,5 @@ const UserInfo = styled.div`
 `
 const GroupName = styled.div`
   font-size: 34px;
+  color: #C571F8;
 `
