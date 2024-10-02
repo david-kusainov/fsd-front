@@ -7,11 +7,9 @@ import { AppDispatch, RootState } from "app/store";
 import { deleteImageUser, setAvatarUser } from "../model";
 
 export const ImagesGridTab = () => {
-  const userId = useSelector((state: RootState) => state.user.user?.id)
-  const user = useSelector((state: RootState) => state.getUser.user)
-  const userIsLoading = useSelector((state: RootState) => state.getUser.isLoading)
-  const userError = useSelector((state: RootState) => state.getUser.error)
   const dispatch: AppDispatch = useDispatch()
+  const userId = useSelector((state: RootState) => state.user.user?.id)
+  const { user, loading, error } = useSelector((state: RootState) => state.getUser)
 
   const handleDeleteImage = async (imageId: string) => {
     try {
@@ -33,7 +31,7 @@ export const ImagesGridTab = () => {
     }
   }
 
-  if (userIsLoading) {
+  if (loading) {
     return (
       <div className="centered">
         <Spin tip="Загрузка данных пользователя..." />
@@ -41,17 +39,9 @@ export const ImagesGridTab = () => {
     )
   }
 
-  if (userError) {
-    let errorMessage: string
-    
-    if (typeof userError === 'string') {
-      errorMessage = userError
-    } else {
-      errorMessage = userError?.error || "Неизвестная ошибка"
-    }
-    console.log(errorMessage)
-    
-    return <div className="centered">Ошибка: {errorMessage}</div>
+  if (error) {
+    console.log(error)
+    return <div className="centered">Ошибка загрузки</div>
   }
 
   if (!user) {

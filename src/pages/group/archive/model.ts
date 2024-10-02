@@ -14,7 +14,7 @@ export const getAllGroupsThunk = createAsyncThunk(
 export const archiveGroupSlice = createSlice({
   name: 'groupArchive',
   initialState: {
-    isLoading: false,
+    loading: false,
     groups: [] as GroupDto[],
     error: null as string | null,
   },
@@ -22,15 +22,15 @@ export const archiveGroupSlice = createSlice({
   extraReducers: (builder) => {
     builder
       .addCase(getAllGroupsThunk.pending, (state) => {
-        state.isLoading = true
+        state.loading = true
         state.error = null
       })
       .addCase(getAllGroupsThunk.fulfilled, (state, action) => {
-        state.isLoading = false
+        state.loading = false
         state.groups = action.payload
       })
       .addCase(getAllGroupsThunk.rejected, (state, action) => {
-        state.isLoading = false
+        state.loading = false
         state.error = action.payload as string
       })
   },

@@ -5,16 +5,14 @@ import { AppDispatch, RootState } from "app/store";
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { updateUser } from "./model";
-import { notification, Spin } from "antd";
+import { notification } from "antd";
 import { UpdateUserDto } from "@entities/dto";
 import { getUser } from "../single/model";
 
 export const EditUserPage = () => {
   const dispatch: AppDispatch = useDispatch()
   const userId = useSelector((state: RootState) => state.user.user?.id)
-  const user = useSelector((state: RootState) => state.getUser.user)
-  const userIsLoading = useSelector((state: RootState) => state.getUser.isLoading)
-  const userError = useSelector((state: RootState) => state.getUser.error)
+  const { user, loading, error } = useSelector((state: RootState) => state.getUser)
 
   useEffect(() => {
     if (userId) {
@@ -34,37 +32,17 @@ export const EditUserPage = () => {
     }
   }
 
-  if (userIsLoading) {
-    return (
-      <div className="centered">
-        <Spin tip="Загрузка данных пользователя..." />
-      </div>
-    )
-  }
-
-  if (userError) {
-    let errorMessage: string
-    
-    if (typeof userError === 'string') {
-      errorMessage = userError
-    } else {
-      errorMessage = userError?.error || "Неизвестная ошибка"
-    }
-    console.log(errorMessage)
-    
-    return (
-      <div className="centered">
-        Ошибка загрузки: {errorMessage}
-      </div>
-    )
-  }
-
   if (!user) {
     return <div>Пользователь не найден</div>
   }
 
   return (
-    <MainLayout title={user?.username} back>
+    <MainLayout 
+      title={user.username || "Профиль"}
+      error={error ? error : undefined}
+      loading={loading}
+      back
+    >
       <Wrapper>
         <FormLayout onSubmit={onSubmit} textButton="Обновить">
           <InputField 
