@@ -60,12 +60,14 @@ export const UserSinglePage = () => {
             <UserName>{user?.username}</UserName>
             <UserStatus>{user?.status}</UserStatus>
           </div>
-          <AntdButton 
-            style={{ marginLeft: 'auto', width: '200px' }}
-            onClick={() => navigate(`/profile/${userId}/edit`)}
-          >
-            Редактировать профиль
-          </AntdButton>
+          <div style={{ marginLeft: 'auto'}}>
+            <AntdButton 
+              style={{ marginLeft: 'auto', width: '200px' }}
+              onClick={() => navigate(`/profile/${userId}/edit`)}
+            >
+              Редактировать профиль
+            </AntdButton>
+          </div>
         </UserInfo>
       </Wrapper>
       <Tabs items={items}/>

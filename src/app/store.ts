@@ -1,7 +1,7 @@
 import { userImageSlice } from '@features/upload';
 import { archiveGroupSlice } from '@pages/group/archive';
 import { createGroupSlice } from '@pages/group/create';
-import { getGroupByIdSlice } from '@pages/group/single';
+import { singleGroupSlice } from '@pages/group/single';
 import { logInSlice } from '@pages/log-in';
 import { signUpSlice } from '@pages/sign-up'
 import { updateUserSlice } from '@pages/user/edit';
@@ -19,7 +19,7 @@ export const store = configureStore({
     userImage: userImageSlice.reducer,
     archiveGroups: archiveGroupSlice.reducer,
     createGroup: createGroupSlice.reducer,
-    singleGroup: getGroupByIdSlice.reducer
+    singleGroup: singleGroupSlice.reducer
   }
 })
 

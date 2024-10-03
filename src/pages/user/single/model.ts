@@ -83,3 +83,12 @@ export const getUserSlice = createSlice({
       })
   }  
 })
+
+export interface ItemsProps {
+  label: string
+  key: string
+  icon?: JSX.Element
+  danger?: boolean
+  children?: JSX.Element
+  onClick?: () => void
+}

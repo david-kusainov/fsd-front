@@ -28,3 +28,10 @@ export const getGroupById = async (groupId: string) => {
     method: "get",
   }).then((response) => response.data)
 }
+
+export const deleteGroup = async (groupId: string) => {
+  return $api.request({
+    url: `groups/${groupId}`,
+    method: "delete",
+  }).then((response) => response.data)
+}

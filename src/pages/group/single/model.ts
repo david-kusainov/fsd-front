@@ -1,5 +1,6 @@
 import { GroupDto } from "@entities/dto"
-import { getGroupById } from "@entities/group"
+import { deleteGroup, getGroupById } from "@entities/group"
+import { checkSubscription, subscribeToGroup, unSubscribeToGroup } from "@entities/user"
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit"
 
 export const getGroupByIdThunk = createAsyncThunk(
@@ -11,7 +12,43 @@ export const getGroupByIdThunk = createAsyncThunk(
   }
 )
 
-export const getGroupByIdSlice = createSlice({
+export const subscribeToGroupThunk = createAsyncThunk(
+  'group/subscribeToGroup',
+  async (args: {userId: number, groupId: string}) => {
+    return await subscribeToGroup(args)
+    .then((response) => response)
+    .catch((error) => error)
+  }
+)
+
+export const unSubscribeToGroupThunk = createAsyncThunk(
+  'group/subscribeToGroup',
+  async (args: {userId: number, groupId: string}) => {
+    return await unSubscribeToGroup(args)
+    .then((response) => response)
+    .catch((error) => error)
+  }
+)
+
+export const checkSubscriptionThunk = createAsyncThunk(
+  'group/checkSubscribe',
+  async (args: {userId: number, groupId: string}) => {
+    return await checkSubscription(args)
+    .then((response) => response)
+    .catch((error) => error)
+  }
+)
+
+export const deleteGroupThunk = createAsyncThunk(
+  'group/checkSubscribe',
+  async (groupId: string) => {
+    return await deleteGroup(groupId)
+    .then((response) => response)
+    .catch((error) => error)
+  }
+)
+
+export const singleGroupSlice = createSlice({
   name: 'getGroupById',
   initialState: {
     loading: false,
@@ -30,6 +67,18 @@ export const getGroupByIdSlice = createSlice({
         state.group = action.payload
       })
       .addCase(getGroupByIdThunk.rejected, (state, action) => {
+        state.loading = false
+        state.error = action.payload as string
+      })
+
+      .addCase(checkSubscriptionThunk.pending, (state) => {
+        state.loading = true,
+        state.error = null
+      })
+      .addCase(checkSubscriptionThunk.fulfilled, (state) => {
+        state.loading = false
+      })
+      .addCase(checkSubscriptionThunk.rejected, (state, action) => {
         state.loading = false
         state.error = action.payload as string
       })

@@ -1,2 +1,2 @@
 export { SingleGroupPage } from './page'
-export { getGroupByIdSlice } from './model'
+export { singleGroupSlice } from './model'

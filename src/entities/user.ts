@@ -59,3 +59,24 @@ export async function deleteImagesByUser(args: {userId: string, imageId: string}
     method: "delete",
   }).then((response) => response.data)
 }
+
+export async function subscribeToGroup(args: {userId: number, groupId: string}) {
+  return $api.request({
+    url: `users/${args.userId}/subscribe-to-group/${args.groupId}`,
+    method: "post",
+  }).then((response) => response.data)
+}
+
+export async function unSubscribeToGroup(args: {userId: number, groupId: string}) {
+  return $api.request({
+    url: `users/${args.userId}/unsubscribe-from-group/${args.groupId}`,
+    method: "post",
+  }).then((response) => response.data)
+}
+
+export async function checkSubscription(args: {userId: number, groupId: string}) {
+  return $api.request({
+    url: `users/${args.userId}/check/subscribe/${args.groupId}`,
+    method: "get",
+  }).then((response) => response.data)
+}
