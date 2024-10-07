@@ -18,14 +18,21 @@ export const FileUpload = ({ userId }: FileUploadProps) => {
       <ImgCrop rotationSlider showReset>
         <Upload
           customRequest={ async (options) => {
-            const { file, onSuccess, onProgress } = options
-            await dispatch(uploadUserImage({ userId, file: file as File })).unwrap()
-            onProgress?.({ percent: 100 })
-            onSuccess?.({
-              message: notification.success({ message: 'Файл успешно загружен!' }),
-            })
-            // success && notification.success({ message: 'Файл успешно загружен!' })
-            error && notification.error({ message: 'Ошибка загрузки файла', description: JSON.stringify(error) })
+            const { file, onSuccess, onProgress, onError } = options
+            try {
+              await dispatch(uploadUserImage({ userId, file: file as File })).unwrap()
+              onProgress?.({ percent: 100 })
+              onSuccess?.({
+                message: notification.success({ message: 'Файл успешно загружен!' }),
+              })
+            } catch (e) {
+              onProgress?.({ percent: 100 })
+              console.error(error)
+              onError?.({
+                name: 'error',
+                message: 'Ошибка загрузки файла',
+              })
+            }
           }}
           disabled={loading}
           showUploadList={false}
