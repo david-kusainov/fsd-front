@@ -10,6 +10,7 @@ import styled from "styled-components";
 import { useNavigate } from "react-router-dom";
 import { ImagesGridTab } from "@pages/user/single/user-images-tab";
 import { UserOutlined } from "@ant-design/icons";
+import { UserGroupsTap } from "./user-groups-tab/content";
 
 const items: TabsProps['items'] = [
   {
@@ -19,8 +20,8 @@ const items: TabsProps['items'] = [
   },
   {
     key: '2',
-    label: 'Tab 2',
-    children: '',
+    label: 'Подписки',
+    children: <UserGroupsTap />,
   },
   {
     key: '3',

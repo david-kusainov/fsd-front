@@ -7,6 +7,7 @@ import { logInSlice } from '@pages/log-in';
 import { signUpSlice } from '@pages/sign-up'
 import { updateUserSlice } from '@pages/user/edit';
 import { getUserSlice } from '@pages/user/single';
+import { getGroupsByUserSlice } from '@pages/user/single/user-groups-tab';
 import { configureStore } from '@reduxjs/toolkit'
 import { userSlice } from '@widgets/provider';
 
@@ -21,7 +22,8 @@ export const store = configureStore({
     archiveGroups: archiveGroupSlice.reducer,
     createGroup: createGroupSlice.reducer,
     singleGroup: singleGroupSlice.reducer,
-    updateGroup: updateGroupSlice.reducer
+    updateGroup: updateGroupSlice.reducer,
+    getGroupsByUser: getGroupsByUserSlice.reducer,
   }
 })
 

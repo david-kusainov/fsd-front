@@ -80,3 +80,17 @@ export async function checkSubscription(args: {userId: number, groupId: string})
     method: "get",
   }).then((response) => response.data)
 }
+
+export const getGroupsByOwner = async (userId: number) => {
+  return $api.request({
+    url: `users/${userId}/groups-owned`,
+    method: "get",
+  }).then((response) => response.data)
+}
+
+export const getGroupsByUser = async (userId: number) => {
+  return $api.request({
+    url: `users/${userId}/groups`,
+    method: "get",
+  }).then((response) => response.data)
+}
