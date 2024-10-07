@@ -38,11 +38,21 @@ export const getGroupById = async (groupId: string) => {
   }).then((response) => response.data)
 }
 
-export async function updateUserById(args: {userId: string, data: UpdateGroupDto}) {
+export async function updateGroupById(args: {groupId: string, data: UpdateGroupDto}) {
+  const formData = new FormData()
+  formData.append("title", args.data.title)
+  formData.append("description", args.data.description)
+
+  if (args.data.icon) {
+    formData.append("icon", args.data.icon)
+  }
+
+  console.log(formData.get("title"))
+
   return $api.request({
-    url: `users/${args.userId}`,
+    url: `groups/${args.groupId}`,
     method: "put",
-    data: args.data,
+    data: formData,
   }).then((response) => response.data)
 }
 

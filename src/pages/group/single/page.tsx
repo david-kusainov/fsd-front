@@ -4,7 +4,7 @@ import { useEffect, useState } from "react"
 import { useDispatch, useSelector } from "react-redux"
 import { checkSubscriptionThunk, deleteGroupThunk, getGroupByIdThunk, subscribeToGroupThunk, unSubscribeToGroupThunk } from "./model"
 import { Wrapper } from "@widgets/layouts/wrapper"
-import { useParams } from "react-router-dom"
+import { useNavigate, useParams } from "react-router-dom"
 import styled from "styled-components"
 import { Avatar, Dropdown, MenuProps, notification } from "antd"
 import { DeleteOutlined, EditOutlined, MinusOutlined, PlusOutlined, UserOutlined } from "@ant-design/icons"
@@ -15,6 +15,7 @@ export const SingleGroupPage = () => {
   const userId = useSelector((state: RootState) => state.user.user!.id)
   const [isSubscribed, setIsSubscribed] = useState(false)
   const { id } = useParams()
+  const navigate = useNavigate()
 
   useEffect(() => {
     dispatch(getGroupByIdThunk(id)).unwrap()
@@ -66,7 +67,7 @@ export const SingleGroupPage = () => {
       label: 'Редактировать',
       key: '2',
       icon: <EditOutlined />,
-      onClick: () => {console.log('Редактировать')},
+      onClick: () => {navigate(`/group/${id}/edit/`)},
       // disabled: isSubscribed ? false : true,
     },
     {

@@ -1,6 +1,7 @@
 import { NotFoundPage } from "@pages/error/not-found";
 import { ArchiveGroupPage } from "@pages/group/archive";
 import { CreateGroupPage } from "@pages/group/create";
+import { EditGroupPage } from "@pages/group/edit";
 import { SingleGroupPage } from "@pages/group/single";
 import { LogInPage } from "@pages/log-in";
 import { NewsPage } from "@pages/news/archive";
@@ -50,5 +51,9 @@ export const router = createBrowserRouter([
   {
     path: '/group/:id',
     element: <SingleGroupPage />
+  },
+  {
+    path: '/group/:id/edit',
+    element: <EditGroupPage />
   }
 ])

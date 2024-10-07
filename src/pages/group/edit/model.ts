@@ -1,34 +1,34 @@
-import { UpdateUserDto } from "@entities/dto";
-import { updateUserById } from "@entities/user";
+import { UpdateGroupDto } from "@entities/dto";
+import { updateGroupById } from "@entities/group";
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 
-export const updateUser = createAsyncThunk(
-  'user/UpdateUserById',
-  async (args: {userId: any, data: UpdateUserDto}, { rejectWithValue }) => {
-    return await updateUserById(args)
+export const updateGroupByIdThunk = createAsyncThunk(
+  'group/UpdateGroupById',
+  async (args: {groupId: string, data: UpdateGroupDto}, { rejectWithValue }) => {
+    return await updateGroupById(args)
       .then((response) => response)
       .catch((error) => rejectWithValue(error.response ? error.response.data : error.message))
   }
 )
 
-export const updateUserSlice = createSlice({
-  name: 'updateUser',
+export const updateGroupSlice = createSlice({
+  name: 'updateGroup',
   initialState: {
-    isLoading: false,
+    loading: false,
     error: null as string | null,
   },
   reducers: {},
   extraReducers: (builder) => {
     builder
-    .addCase(updateUser.pending, (state) => {
-      state.isLoading = true
+    .addCase(updateGroupByIdThunk.pending, (state) => {
+      state.loading = true
       state.error = null
     })
-    .addCase(updateUser.fulfilled, (state) => {
-      state.isLoading = false
+    .addCase(updateGroupByIdThunk.fulfilled, (state) => {
+      state.loading = false
     })
-    .addCase(updateUser.rejected, (state, action) => {
-      state.isLoading = false
+    .addCase(updateGroupByIdThunk.rejected, (state, action) => {
+      state.loading = false
       state.error = action.payload as string
     })
   }
