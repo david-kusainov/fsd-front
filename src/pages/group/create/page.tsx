@@ -24,17 +24,11 @@ export const CreateGroupPage = () => {
       }
 
       if (userId) {
-        const formData = new FormData()
-        formData.append("title", data.title)
-        formData.append("description", data.description)
-        if (file) {
-          formData.append("icon", file)
-        }
-        dispatch(createGroups({ userId, data: formData }))
+        dispatch(createGroups({ userId, data: { ...data, icon: file } }))
         notification.success({ message: 'Успешное создание группы' })
       }
     } catch (e) {
-      console.error(e);
+      console.error(e)
       notification.error({ message: 'Произошла ошибка при создании группы' })
     }
   }
@@ -53,6 +47,7 @@ export const CreateGroupPage = () => {
       title={"Создание группы"}
       error={error ? error : undefined}
       loading={loading}
+      back
     >
       <Wrapper>
         <FormLayout

@@ -40,7 +40,7 @@ export const checkSubscriptionThunk = createAsyncThunk(
 )
 
 export const deleteGroupThunk = createAsyncThunk(
-  'group/checkSubscribe',
+  'group/delete',
   async (groupId: string) => {
     return await deleteGroup(groupId)
     .then((response) => response)

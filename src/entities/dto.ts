@@ -42,6 +42,12 @@ export interface GroupDto {
   icon: number
 }
 
+export interface UpdateGroupDto {
+  title: string
+  description: string
+  icon: File
+}
+
 export interface ParamsGroupDto {
   query?: string
   page: number

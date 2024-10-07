@@ -1,9 +1,10 @@
+import { CreateGroupDto } from "@entities/dto";
 import { createGroup } from "@entities/group";
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 
 export const createGroups = createAsyncThunk(
   'group/createGroup',
-  async (args: {userId: number, data: FormData }, { rejectWithValue }) => {
+  async (args: {userId: number, data: CreateGroupDto }, { rejectWithValue }) => {
     return await createGroup(args)
       .then((response) => response)
       .catch((error) => rejectWithValue(error.response ? error.response.data : error.message))

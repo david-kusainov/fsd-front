@@ -1,0 +1,1 @@
+export { EditGroupPage } from './page'
