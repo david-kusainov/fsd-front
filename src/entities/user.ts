@@ -1,7 +1,7 @@
 import { UpdateUserDto} from "./dto";
 import { $api, $apiImages } from "./axios-instance";
 
-export async function getUserInfoById(userId: string) {
+export async function getUserInfoById(userId: number) {
   return $api.request({
     url: `users/${userId}/info`,
     method: "get",
