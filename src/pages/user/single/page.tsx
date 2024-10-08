@@ -20,13 +20,13 @@ const items: TabsProps['items'] = [
   },
   {
     key: '2',
-    label: 'Подписки',
-    children: <UserGroupsTap />,
+    label: 'Мои подписки',
+    children: <UserGroupsTap isOwner={false} />,
   },
   {
     key: '3',
-    label: 'Tab 3',
-    children: '',
+    label: 'Мои группы',
+    children: <UserGroupsTap isOwner={true} />,
   },
 ]
 

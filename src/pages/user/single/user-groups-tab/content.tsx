@@ -1,18 +1,19 @@
 import { AppDispatch, RootState } from "app/store";
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { getUserGroupsByUserThunk } from "./model";
+import { getGroupsByOwnerThunk, getGroupsByUserThunk } from "./model";
 import { GroupCard } from "@features/group-card";
 import { Spin } from "antd";
 
-export const UserGroupsTap = () => {
+export const UserGroupsTap = ({ isOwner }: { isOwner: boolean }) => {
   const dispatch: AppDispatch = useDispatch()
   const userId = useSelector((state: RootState) => state.user.user?.id)
-  const { loading, error, group } = useSelector((state: RootState) => state.getGroupsByUser)
+  const { loading, error, ownedGroups, subscribedGroups } = useSelector((state: RootState) => state.getGroupsByUser)
 
   useEffect(() => {
     if(userId){
-      dispatch(getUserGroupsByUserThunk(userId))
+      dispatch(getGroupsByOwnerThunk(userId))
+      dispatch(getGroupsByUserThunk(userId))
     }
   }, [dispatch, userId])
 
@@ -25,6 +26,12 @@ export const UserGroupsTap = () => {
   }
 
   return (
-    <GroupCard groupData={group}/>
+    <>
+      {isOwner ? (
+        <GroupCard groupData={ownedGroups}/>
+      ) : (
+        <GroupCard groupData={subscribedGroups}/>
+      )}
+    </>
   )
 }
