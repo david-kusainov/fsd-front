@@ -6,6 +6,7 @@ import { SingleGroupPage } from "@pages/group/single";
 import { LogInPage } from "@pages/log-in";
 import { NewsPage } from "@pages/news/archive";
 import { SignUpPage } from "@pages/sign-up";
+import { ArchiveUserPage } from "@pages/user/archive";
 import { EditUserPage } from "@pages/user/edit";
 import { UserSinglePage } from "@pages/user/single";
 import { WelcomePage } from "@pages/welcome";
@@ -31,6 +32,10 @@ export const router = createBrowserRouter([
   {
     path: '/',
     element: <NewsPage />
+  },
+  {
+    path: 'users',
+    element: <ArchiveUserPage />
   },
   {
     path: '/profile/:id',
