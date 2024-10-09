@@ -1,5 +1,5 @@
 import { Button, ButtonProps, Input, InputProps } from "antd"
-import { ReactNode, RefAttributes, useEffect } from "react"
+import { ReactNode, RefAttributes } from "react"
 import { Controller, FormProvider, useForm, useFormContext } from "react-hook-form"
 import { useNavigate } from "react-router-dom"
 
@@ -86,19 +86,22 @@ export const FormLayout = ({ children, onSubmit, textButton, route }: FormLayout
   const methods = useForm()
   const navigate = useNavigate()
 
-  useEffect(() => {
-    if (methods.formState.isSubmitSuccessful && route) {
-      navigate(route)
-    }
-  }, [methods.formState.isSubmitSuccessful, navigate, route])
-
   return (
     <FormProvider {...methods}>
       <form onSubmit={methods.handleSubmit(onSubmit)}>
         {children}
-        <AntdSubmitButton>
-          {textButton ? textButton : 'Отправить'}
-        </AntdSubmitButton>
+        {route ? (
+          <AntdSubmitButton
+            onClick={() => navigate(route)}
+          >
+            {textButton ? textButton : 'Отправить'}
+          </AntdSubmitButton>
+        ) : (
+          <AntdSubmitButton
+          >
+            {textButton ? textButton : 'Отправить'}
+          </AntdSubmitButton>
+        )}
       </form>
     </FormProvider>
   )

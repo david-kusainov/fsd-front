@@ -40,6 +40,8 @@ export interface GroupDto {
   title: string
   description: string
   icon: number
+  subscribersCount: number
+  owner: number
 }
 
 export interface UpdateGroupDto {

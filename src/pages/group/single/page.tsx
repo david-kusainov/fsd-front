@@ -31,12 +31,10 @@ export const SingleGroupPage = () => {
         await dispatch(subscribeToGroupThunk({userId: userId, groupId: id!})).unwrap()
         setIsSubscribed(true)
         notification.success({message: 'Вы подписались на группу'})
-        console.log(isSubscribed)
       } else {
         await dispatch(unSubscribeToGroupThunk({userId: userId, groupId: id!})).unwrap()
         setIsSubscribed(false)
         notification.success({message: 'Вы отписались от группы'})
-        console.log(isSubscribed)
       }
     } catch (e) {
       console.error(e)
@@ -48,7 +46,7 @@ export const SingleGroupPage = () => {
     try {
       await dispatch(deleteGroupThunk(id!)).unwrap()
       notification.success({message: 'Группа удалена'})
-      // window.history.back()
+      navigate('/groups')
     } catch (e) {
       console.error(e)
       notification.error({message: 'Произошла ошибка при удалении группы'})
@@ -68,14 +66,14 @@ export const SingleGroupPage = () => {
       key: '2',
       icon: <EditOutlined />,
       onClick: () => {navigate(`/group/${id}/edit/`)},
-      // disabled: isSubscribed ? false : true,
+      disabled: group?.owner === userId ? false : true,
     },
     {
       label: 'Удалить',
       key: '3',
       icon: <DeleteOutlined />,
       onClick: handleDeleteGroup,
-      // disabled: isSubscribed ? false : true,
+      disabled: group?.owner === userId ? false : true,
     },
   ]
   
@@ -101,7 +99,8 @@ export const SingleGroupPage = () => {
           </div>
           <div>
             <GroupName>{group?.title}</GroupName>
-            <div>{group?.description}</div>
+            <div style={{ marginBottom: '20px'}}>{group?.description}</div>
+            <div>Подписчики: {group?.subscribersCount}</div>
           </div>
           <div style={{ marginLeft: 'auto'}}>
             <Dropdown.Button menu={menuProps}>

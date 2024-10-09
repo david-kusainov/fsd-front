@@ -15,6 +15,7 @@ export const createGroupSlice = createSlice({
   name: 'createGroup',
   initialState: {
     loading: false,
+    groupId: null as number | null,
     error: null as string | null,
   },
   reducers: {},
@@ -24,8 +25,9 @@ export const createGroupSlice = createSlice({
         state.loading = true
         state.error = null
       })
-      .addCase(createGroups.fulfilled, (state) => {
+      .addCase(createGroups.fulfilled, (state, action) => {
         state.loading = false
+        state.groupId = action.payload.id
       })
       .addCase(createGroups.rejected, (state, action) => {
         state.loading = false

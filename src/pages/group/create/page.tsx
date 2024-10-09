@@ -12,7 +12,7 @@ import { UserOutlined } from "@ant-design/icons";
 export const CreateGroupPage = () => {
   const dispatch: AppDispatch = useDispatch()
   const userId = useSelector((state: RootState) => state.user.user?.id)
-  const { loading, error } = useSelector((state: RootState) => state.createGroup)
+  const { loading, error, groupId } = useSelector((state: RootState) => state.createGroup)
   const [file, setFile] = useState<File | null>(null)
   const [imageUrl, setImageUrl] = useState<string | undefined>(undefined)
 
@@ -53,7 +53,7 @@ export const CreateGroupPage = () => {
         <FormLayout
           onSubmit={onSubmit}
           textButton="Создать"
-          route={`/groups`}
+          route={`/group/${groupId}`}
         >
           <InputField
             field="title"
