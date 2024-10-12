@@ -21,8 +21,8 @@ export default defineConfig(() => {
       },
     },
     server: {
-      port: Number(process.env.VITE_APP_DEV_PORT) || 3000,
-      host: 'localhost',
+      port: 3000,
+      host: '0.0.0.0',
     },
   }
 })
