@@ -1,4 +1,6 @@
 import { NotFoundPage } from "@pages/error/not-found";
+import { ArchiveGamePage } from "@pages/game/archive";
+import { CreateGamePage } from "@pages/game/create";
 import { ArchiveGroupPage } from "@pages/group/archive";
 import { CreateGroupPage } from "@pages/group/create";
 import { EditGroupPage } from "@pages/group/edit";
@@ -60,5 +62,13 @@ export const router = createBrowserRouter([
   {
     path: '/group/:id/edit',
     element: <EditGroupPage />
+  },
+  {
+    path: '/games',
+    element: <ArchiveGamePage />
+  },
+  {
+    path: '/game/create',
+    element: <CreateGamePage />
   }
 ])

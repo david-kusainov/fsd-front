@@ -54,7 +54,7 @@ export const UserSinglePage = () => {
             <Avatar 
               src={`http://localhost:8080/api/images/${user?.icon}`}
               icon={user?.icon ? undefined : <UserOutlined />}
-              size={150}
+              size={{ xs: 60, sm: 58, md: 76, lg: 100, xl: 116, xxl: 136 }}
             />
           </div>
           <div>

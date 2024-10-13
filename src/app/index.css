@@ -10,6 +10,9 @@
   -moz-osx-font-smoothing: grayscale; 
 }
 
+html, body {
+  overflow: auto;
+}
 
 html {
   display: flex;
@@ -19,7 +22,7 @@ html {
 
 body {
   margin: 0;
-  width: 40%;
+  width: 100%;
   color: #505050;
 }
 

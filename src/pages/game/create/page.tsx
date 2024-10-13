@@ -3,16 +3,16 @@ import { MainLayout } from "@widgets/layouts/main-layout";
 import { Wrapper } from "@widgets/layouts/wrapper";
 import { AppDispatch, RootState } from "app/store";
 import { useDispatch, useSelector } from "react-redux";
-import { createGroupThunk } from "./model";
+import { createGameThunk } from "./model";
 import ImgCrop from "antd-img-crop";
 import { Avatar, notification, Upload } from "antd";
 import { useState } from "react";
 import { UserOutlined } from "@ant-design/icons";
 
-export const CreateGroupPage = () => {
+export const CreateGamePage = () => {
   const dispatch: AppDispatch = useDispatch()
   const userId = useSelector((state: RootState) => state.user.user?.id)
-  const { loading, error, groupId } = useSelector((state: RootState) => state.createGroup)
+  const { loading, error, gameId } = useSelector((state: RootState) => state.createGame)
   const [file, setFile] = useState<File | null>(null)
   const [imageUrl, setImageUrl] = useState<string | undefined>(undefined)
 
@@ -24,12 +24,12 @@ export const CreateGroupPage = () => {
       }
 
       if (userId) {
-        dispatch(createGroupThunk({ userId, data: { ...data, icon: file } }))
-        notification.success({ message: 'Успешное создание группы' })
+        dispatch(createGameThunk({ ...data, icon: file }))
+        notification.success({ message: 'Успешное создание игры' })
       }
     } catch (e) {
       console.error(e)
-      notification.error({ message: 'Произошла ошибка при создании группы' })
+      notification.error({ message: 'Произошла ошибка при создании игры' })
     }
   }
 
@@ -53,7 +53,7 @@ export const CreateGroupPage = () => {
         <FormLayout
           onSubmit={onSubmit}
           textButton="Создать"
-          route={`/group/${groupId}`}
+          // route={`/group/${gameId}`}
         >
           <InputField
             field="title"

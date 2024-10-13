@@ -32,8 +32,8 @@ export const Head = ({ title }: HeadProps) => {
     },
     {
       key: '4',
-      label: 'Мои запросы',
-      link: '/private-office/query'
+      label: 'Игры',
+      link: '/games'
     },
     {
       key: '5',

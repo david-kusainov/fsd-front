@@ -3,6 +3,7 @@ import { JwtPayload } from "jwt-decode";
 
 interface UserInfo extends JwtPayload {
   id: number
+  role: string
 }
 
 export const userSlice = createSlice({

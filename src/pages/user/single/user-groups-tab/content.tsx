@@ -30,11 +30,11 @@ export const UserGroupsTap = ({ isOwner }: { isOwner: boolean }) => {
     if (!ownedGroups.length) {
       return <Wrapper>Вы не являетесь владельцем групп</Wrapper>
     }
-    return <GroupCard groupData={ownedGroups} />
+    return <GroupCard entityData={ownedGroups} to={`/group/${ownedGroups.map((item: any) => item.id)}`}/>
   } else {
     if (!subscribedGroups.length) {
       return <Wrapper>Вы не подписаны ни на одну группу</Wrapper>
     }
-    return <GroupCard groupData={subscribedGroups} />
+    return <GroupCard entityData={subscribedGroups} to={`/group/${subscribedGroups.map((item: any) => item.id)}`}/>
   }
 }

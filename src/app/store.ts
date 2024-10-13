@@ -1,4 +1,6 @@
 import { userImageSlice } from '@features/upload';
+import { archiveGameSlice } from '@pages/game/archive';
+import { createGameSlice } from '@pages/game/create';
 import { archiveGroupSlice } from '@pages/group/archive';
 import { createGroupSlice } from '@pages/group/create';
 import { updateGroupSlice } from '@pages/group/edit';
@@ -24,6 +26,8 @@ export const store = configureStore({
     singleGroup: singleGroupSlice.reducer,
     updateGroup: updateGroupSlice.reducer,
     getGroupsByUser: getGroupsByUserSlice.reducer,
+    archiveGames: archiveGameSlice.reducer,
+    createGame: createGameSlice.reducer,
   }
 })
 

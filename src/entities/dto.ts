@@ -55,3 +55,16 @@ export interface ParamsGroupDto {
   page: number
   size: number
 }
+
+export interface CreateGameDto {
+  title: string
+  description: string
+  icon: File
+}
+
+export interface GameDto {
+  id: number
+  title: string
+  description: string
+  icon: number
+}

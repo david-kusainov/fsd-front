@@ -2,7 +2,7 @@ import { CreateGroupDto } from "@entities/dto";
 import { createGroup } from "@entities/group";
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 
-export const createGroups = createAsyncThunk(
+export const createGroupThunk = createAsyncThunk(
   'group/createGroup',
   async (args: {userId: number, data: CreateGroupDto }, { rejectWithValue }) => {
     return await createGroup(args)
@@ -21,15 +21,15 @@ export const createGroupSlice = createSlice({
   reducers: {},
   extraReducers: (builder) => {
     builder
-      .addCase(createGroups.pending, (state) => {
+      .addCase(createGroupThunk.pending, (state) => {
         state.loading = true
         state.error = null
       })
-      .addCase(createGroups.fulfilled, (state, action) => {
+      .addCase(createGroupThunk.fulfilled, (state, action) => {
         state.loading = false
         state.groupId = action.payload.id
       })
-      .addCase(createGroups.rejected, (state, action) => {
+      .addCase(createGroupThunk.rejected, (state, action) => {
         state.loading = false
         state.error = action.payload as string
       })
