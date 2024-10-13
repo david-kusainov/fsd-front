@@ -4,6 +4,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { getGroupsByOwnerThunk, getGroupsByUserThunk } from "./model";
 import { GroupCard } from "@features/group-card";
 import { Spin } from "antd";
+import { Wrapper } from "@widgets/layouts/wrapper";
 
 export const UserGroupsTap = ({ isOwner }: { isOwner: boolean }) => {
   const dispatch: AppDispatch = useDispatch()
@@ -18,20 +19,22 @@ export const UserGroupsTap = ({ isOwner }: { isOwner: boolean }) => {
   }, [dispatch, userId])
 
   if(loading){
-    return <div className="centered"> <Spin tip="Загрузка данных" /> </div>
+    return <div> <Spin tip="Загрузка данных" /> </div>
   }
 
   if(error){
-    return <div className="centered"> Ошибка загрузки подписок</div>
+    return <div> Ошибка загрузки подписок</div>
   }
 
-  return (
-    <>
-      {isOwner ? (
-        <GroupCard groupData={ownedGroups}/>
-      ) : (
-        <GroupCard groupData={subscribedGroups}/>
-      )}
-    </>
-  )
+  if (isOwner) {
+    if (!ownedGroups.length) {
+      return <Wrapper>Вы не являетесь владельцем групп</Wrapper>
+    }
+    return <GroupCard groupData={ownedGroups} />
+  } else {
+    if (!subscribedGroups.length) {
+      return <Wrapper>Вы не подписаны ни на одну группу</Wrapper>
+    }
+    return <GroupCard groupData={subscribedGroups} />
+  }
 }
